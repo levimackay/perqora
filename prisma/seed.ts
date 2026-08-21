@@ -96,6 +96,15 @@ const TAGS = [
   "version-control",
   "apple",
   "microsoft",
+  // These mirror the interest slugs in src/lib/constants.ts (INTERESTS) so the
+  // /discover personalization flow and interest-based filtering can match
+  // benefits directly by tag, without a separate mapping table.
+  "software-development",
+  "cloud",
+  "productivity",
+  "education",
+  "gaming",
+  "cybersecurity",
 ];
 
 type SeedBenefit = {
@@ -144,7 +153,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://education.github.com/pack",
     source: "https://education.github.com/pack",
     confidenceScore: 70,
-    tags: ["github", "cloud-credits", "cs-stack", "version-control"],
+    tags: ["github", "cloud-credits", "cs-stack", "version-control", "software-development", "cloud"],
     isFeatured: true,
   },
   {
@@ -168,7 +177,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://www.jetbrains.com/community/education/",
     source: "https://www.jetbrains.com/community/education/",
     confidenceScore: 65,
-    tags: ["ide", "cs-stack"],
+    tags: ["ide", "cs-stack", "software-development"],
     isFeatured: true,
   },
   {
@@ -189,7 +198,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://azure.microsoft.com/en-us/free/students/",
     source: "https://azure.microsoft.com/en-us/free/students/",
     confidenceScore: 65,
-    tags: ["cloud-credits", "cs-stack", "microsoft"],
+    tags: ["cloud-credits", "cs-stack", "microsoft", "cloud", "software-development"],
     isFeatured: true,
   },
   {
@@ -209,7 +218,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://aws.amazon.com/education/awseducate/",
     source: "https://aws.amazon.com/education/awseducate/",
     confidenceScore: 55,
-    tags: ["cloud-credits", "cs-stack"],
+    tags: ["cloud-credits", "cs-stack", "cloud", "software-development"],
   },
   {
     slug: "figma-education",
@@ -269,7 +278,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://www.notion.com/students",
     source: "https://www.notion.com/students",
     confidenceScore: 65,
-    tags: [],
+    tags: ["productivity"],
   },
   {
     slug: "canva-for-education",
@@ -304,7 +313,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://www.autodesk.com/education/edu-software/overview",
     source: "https://www.autodesk.com/education/edu-software/overview",
     confidenceScore: 55,
-    tags: ["cad"],
+    tags: ["cad", "design", "education"],
   },
   {
     slug: "matlab-student",
@@ -321,7 +330,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://www.mathworks.com/academia/student-edition.html",
     source: "https://www.mathworks.com/academia/student-edition.html",
     confidenceScore: 55,
-    tags: ["cs-stack"],
+    tags: ["cs-stack", "software-development", "education"],
   },
   {
     slug: "spotify-premium-student",
@@ -393,7 +402,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://www.microsoft.com/en-us/education/products/office",
     source: "https://www.microsoft.com/en-us/education/products/office",
     confidenceScore: 50,
-    tags: ["office", "microsoft"],
+    tags: ["office", "microsoft", "productivity"],
   },
   {
     slug: "google-workspace-education",
@@ -410,7 +419,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://edu.google.com/workspace-for-education/",
     source: "https://edu.google.com/workspace-for-education/",
     confidenceScore: 50,
-    tags: ["office"],
+    tags: ["office", "productivity"],
   },
   {
     slug: "unity-student-plan",
@@ -427,7 +436,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://unity.com/products/unity-student",
     source: "https://unity.com/products/unity-student",
     confidenceScore: 50,
-    tags: ["cs-stack"],
+    tags: ["cs-stack", "gaming", "software-development"],
   },
   {
     slug: "namecheap-domain-github-pack",
@@ -444,7 +453,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://nc.me/",
     source: "https://nc.me/",
     confidenceScore: 55,
-    tags: ["domains", "cs-stack"],
+    tags: ["domains", "cs-stack", "cloud", "software-development"],
   },
   {
     slug: "mongodb-atlas-student-credit",
@@ -461,7 +470,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://www.mongodb.com/students",
     source: "https://www.mongodb.com/students",
     confidenceScore: 50,
-    tags: ["database", "cs-stack"],
+    tags: ["database", "cs-stack", "cloud", "software-development"],
   },
   {
     slug: "digitalocean-github-pack-credit",
@@ -478,7 +487,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://www.digitalocean.com/",
     source: "https://education.github.com/pack",
     confidenceScore: 50,
-    tags: ["hosting", "cloud-credits", "cs-stack"],
+    tags: ["hosting", "cloud-credits", "cs-stack", "cloud", "software-development"],
   },
   {
     slug: "1password-families-student",
@@ -495,7 +504,7 @@ const BENEFITS: SeedBenefit[] = [
     officialUrl: "https://1password.com/",
     source: "https://1password.com/",
     confidenceScore: 30,
-    tags: [],
+    tags: ["cybersecurity", "productivity"],
   },
 ];
 

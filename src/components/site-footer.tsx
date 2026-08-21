@@ -7,7 +7,7 @@ const COLUMNS = [
     links: [
       { href: "/discover", label: "Discover" },
       { href: "/benefits", label: "All benefits" },
-      { href: "/categories/developer-tools", label: "CS Stack" },
+      { href: "/cs-stack", label: "CS Stack" },
       { href: "/submit", label: "Submit a benefit" },
     ],
   },
@@ -51,7 +51,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-text-secondary transition-colors duration-150 hover:text-text-primary"
+                    className="rounded-sm text-sm text-text-secondary transition-colors duration-150 hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     {link.label}
                   </Link>

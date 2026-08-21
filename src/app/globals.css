@@ -5,7 +5,7 @@
   --ink-900: oklch(20% 0.012 145);
   --ink-800: oklch(27% 0.014 145);
   --ink-700: oklch(35% 0.014 145);
-  --ink-500: oklch(58% 0.012 145);
+  --ink-500: oklch(64% 0.012 145);
   --ink-300: oklch(78% 0.01 145);
   --ink-100: oklch(94% 0.006 145);
 
@@ -46,6 +46,14 @@
   --text-primary: var(--ink-100);
   --text-secondary: var(--ink-500);
   --text-on-accent: var(--ink-950);
+  /*
+   * A distinct, higher-contrast border for interactive control boundaries
+   * (inputs, selects, secondary buttons), kept separate from the
+   * hairline-strength --surface-border used for decorative section
+   * dividers. WCAG 1.4.11 requires 3:1 for non-text UI component
+   * boundaries; --surface-border alone is well under that.
+   */
+  --control-border: oklch(50% 0.014 145);
 }
 
 :root[data-theme="light"] {
@@ -55,12 +63,14 @@
   --text-primary: var(--paper-900);
   --text-secondary: var(--paper-700);
   --text-on-accent: var(--paper-900);
+  --control-border: oklch(65% 0.014 90);
 }
 
 @theme inline {
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
   --color-surface-border: var(--surface-border);
+  --color-control-border: var(--control-border);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-accent: var(--accent-500);
@@ -75,18 +85,20 @@
   --font-display: var(--font-display);
   --font-mono: var(--font-mono);
 
-  --spacing-1: var(--space-1);
-  --spacing-2: var(--space-2);
-  --spacing-3: var(--space-3);
-  --spacing-4: var(--space-4);
-  --spacing-5: var(--space-5);
-  --spacing-6: var(--space-6);
-  --spacing-7: var(--space-7);
-  --spacing-8: var(--space-8);
-
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
 }
+
+/*
+ * Spacing intentionally does NOT redefine Tailwind's numeric scale (p-1, p-4,
+ * gap-6, ...) because Tailwind v4 derives every numeral from a single base
+ * unit, and this project's base unit already is 4px, so the standard scale
+ * already matches DESIGN.md section 6:
+ *   space-1 = p-1 (4px)   space-4 = p-6  (24px)   space-7 = p-24 (96px)
+ *   space-2 = p-2 (8px)   space-5 = p-10 (40px)   space-8 = p-40 (160px)
+ *   space-3 = p-4 (16px)  space-6 = p-16 (64px)
+ * Use those standard utilities directly instead of inventing new ones.
+ */
 
 html {
   color-scheme: dark;

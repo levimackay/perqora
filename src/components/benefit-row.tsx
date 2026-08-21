@@ -20,7 +20,7 @@ export function BenefitRow({ benefit }: { benefit: BenefitCard }) {
   return (
     <Link
       href={`/benefits/${benefit.slug}`}
-      className="group grid grid-cols-1 items-center gap-3 border-b border-surface-border py-4 transition-colors duration-150 ease-[var(--ease-standard)] hover:bg-surface-raised/60 sm:grid-cols-[1fr_auto_auto] sm:gap-6 sm:px-3"
+      className="group grid grid-cols-1 items-center gap-3 rounded-sm border-b border-surface-border py-4 transition-colors duration-150 ease-[var(--ease-standard)] hover:bg-surface-raised/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:grid-cols-[1fr_auto_auto] sm:gap-6 sm:px-3"
     >
       <div className="min-w-0">
         <div className="flex items-center gap-2">

@@ -1,23 +1,23 @@
-# Perqora — Design Specification
+# Perqora: Design Specification
 
 This file is binding. Deviating from it means editing it first, not quietly diverging in code.
 
 ## 1. The brief
 
-**Who, and what do they feel 800ms after load.** CS and technically-minded students first, every other major second. The feeling is *engineered* and *audited* — the calm of opening a well-instrumented dashboard, not the noise of a coupon site.
+**Who, and what do they feel 800ms after load.** CS and technically-minded students first, every other major second. The feeling is *engineered* and *audited*: the calm of opening a well-instrumented dashboard, not the noise of a coupon site.
 
 **The one thing they remember.** Verification is drawn, not claimed. Every benefit carries a status chip and a "last checked" timestamp rendered like a build-status indicator, and the whole index of benefits reads like a monitored system rather than a wall of deal cards.
 
 **The one action that matters.** Tell it your school (or email domain) and see the specific list of things you now qualify for. Everything else, including "claim," is downstream of that one moment.
 
-**What this is not.** Not Student Beans. Not RetailMeNot with a school logo. Not a bento grid of icon-title-paragraph cards. Not a purple-to-blue hero wash. Not friendly and rounded — precise and legible instead.
+**What this is not.** Not Student Beans. Not RetailMeNot with a school logo. Not a bento grid of icon-title-paragraph cards. Not a purple-to-blue hero wash. Not friendly and rounded, precise and legible instead.
 
 **Where it lives.** Developer-tool-adjacent consumer SaaS: the register of Linear and Vercel, not the register of a deals aggregator. The flagship benefit is the GitHub Student Developer Pack, so a quiet nod to commit/status UI language is earned, not costume.
 
 **References, and the specific thing taken from each.**
-- **Linear** — restrained motion, monospace used for metadata/labels rather than decoration, generous negative space around dense information.
-- **Vercel** — dark-mode-first surface, a grid tight enough to feel engineered, geometric display type doing real hierarchy work.
-- **GitHub's own status/commit UI** — small, literal status language (verified / needs review / stale) instead of marketing badges. Not imitated visually, borrowed structurally.
+- **Linear**: restrained motion, monospace used for metadata/labels rather than decoration, generous negative space around dense information.
+- **Vercel**: dark-mode-first surface, a grid tight enough to feel engineered, geometric display type doing real hierarchy work.
+- **GitHub's own status/commit UI**: small, literal status language (verified / needs review / stale) instead of marketing badges. Not imitated visually, borrowed structurally.
 
 ## 2. Typography
 
@@ -43,7 +43,7 @@ Body measure caps at 65ch. Display type never sits under 96px without dropping a
 
 ## 3. Color
 
-Dark-mode is the primary register (matches the audience and the "engineered" feeling); light mode is a fully worked second surface, not an afterthought.
+Dark-mode is the primary register (matches the audience and the "engineered" feeling) and the only one shipped in v1. Light mode is intended as a real second surface, not an afterthought, and its structural tokens (surface, text, borders) already exist in `globals.css`, but see the color-contrast gap noted below before treating it as finished.
 
 Anchor hue: a phosphor/terminal green, because "verified" is both the brand promise and the accent color. No indigo, no violet, no blue-to-purple wash.
 
@@ -52,7 +52,7 @@ Anchor hue: a phosphor/terminal green, because "verified" is both the brand prom
 --ink-900:  oklch(20% 0.012 145)
 --ink-800:  oklch(27% 0.014 145)
 --ink-700:  oklch(35% 0.014 145)
---ink-500:  oklch(58% 0.012 145)  /* secondary text on dark */
+--ink-500:  oklch(64% 0.012 145)  /* secondary text on dark, 5.4:1+ against ink-950/ink-900 */
 --ink-300:  oklch(78% 0.01 145)
 --ink-100:  oklch(94% 0.006 145)  /* body text on dark */
 
@@ -63,7 +63,7 @@ Anchor hue: a phosphor/terminal green, because "verified" is both the brand prom
 --paper-700: oklch(38% 0.014 145)
 --paper-900: oklch(18% 0.014 145)  /* body text on light */
 
---accent-500: oklch(84% 0.20 142)  /* phosphor green — brand + "verified" */
+--accent-500: oklch(84% 0.20 142)  /* phosphor green, brand plus "verified" */
 --accent-600: oklch(74% 0.19 142)  /* pressed / on-paper text use */
 --accent-glow: oklch(84% 0.20 142 / 0.14)
 
@@ -75,13 +75,15 @@ Anchor hue: a phosphor/terminal green, because "verified" is both the brand prom
 
 One accent (the phosphor green) carrying both brand and "verified" meaning is deliberate: staleness and review states use desaturated amber/grey, not competing saturated hues, so the accent still reads as singular.
 
+**Known gap, not yet fixed:** the light-mode values above have not been contrast-checked. Nothing in the app currently sets `data-theme="light"` (no toggle exists yet), so this isn't a live bug, but it means light mode is a real second theme in CSS without yet being a genuinely finished one. Before wiring up a light/dark toggle, the accent and status colors need light-appropriate darker variants (the same hue, roughly 40% OKLCH lightness reads at 8:1+ against `--paper-50` in early testing), not the same bright values used on dark, which fail against a near-white surface.
+
 ## 4. Backgrounds
 
 No gradient wash. Depth comes from a faint fixed-position dot-free grid: a 1px hairline grid at 4% opacity of `--ink-100` over `--ink-950`, plus a single soft radial falloff of `--accent-glow` anchored top-left of the hero only, never repeated lower on the page. Section boundaries are hairlines (`1px solid --ink-800`), not padding-only whitespace, reinforcing the "instrumented" feeling.
 
 ## 5. Macrostructure
 
-**Stat-led hero, index-style body.** The hero is dominated by one number: the potential annual value of the benefits the visitor's inputs unlock, set in `--text-display-xl` Plex Mono digits. Below it, benefits render as an **index** — dense rows with status chip, name, provider, type, and value, not icon-title-paragraph cards. This is a deliberate structural choice, not a leftover table: the product's honesty claim (verification, freshness) only reads as true if the layout resembles a monitored log rather than a marketing card wall.
+**Stat-led hero, index-style body.** The hero is dominated by one number: the potential annual value of the benefits the visitor's inputs unlock, set in `--text-display-xl` Plex Mono digits. Below it, benefits render as an **index**, dense rows with status chip, name, provider, type, and value, not icon-title-paragraph cards. This is a deliberate structural choice, not a leftover table: the product's honesty claim (verification, freshness) only reads as true if the layout resembles a monitored log rather than a marketing card wall.
 
 Section rhythm is intentionally uneven: hero gets the most air (`--space-8` top and bottom), the index sections run tight (`--space-3` between rows) so density itself communicates "this is real data," and the CS Stack and savings-counter set pieces each get one full breathing section on their own.
 

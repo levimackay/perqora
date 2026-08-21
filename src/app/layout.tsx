@@ -9,25 +9,23 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: {
-    default: "Perqora — What does your student status unlock?",
-    template: "%s — Perqora",
+    default: "Perqora: what does your student status unlock?",
+    template: "%s: Perqora",
   },
   description:
     "Discover the free software, discounts, cloud credits, and everyday benefits your student status unlocks, with a visible verification date on every listing.",
   openGraph: {
     type: "website",
     siteName: "Perqora",
-    title: "Perqora — What does your student status unlock?",
+    title: "Perqora: what does your student status unlock?",
     description:
       "Discover the free software, discounts, cloud credits, and everyday benefits your student status unlocks.",
     url: appUrl,
-    images: ["/og-image.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Perqora — What does your student status unlock?",
+    title: "Perqora: what does your student status unlock?",
     description: "Discover what your student status unlocks, verified and dated.",
-    images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
 };

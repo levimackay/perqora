@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 /**
  * Resolves a school from an email address's domain. Returns null rather than
- * guessing when the domain isn't in our school directory yet — the directory
+ * guessing when the domain isn't in our school directory yet. The directory
  * is seeded with a handful of institutions and is expected to grow via the
  * admin/school-import path, not by fuzzy-matching unknown domains.
  */

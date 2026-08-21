@@ -62,24 +62,30 @@ Run `pnpm db:deploy` (not `db:migrate`, which prompts interactively) as part of 
 
 ## GitHub repository configuration this project needs, and what's already been done automatically versus what a human has to do by hand
 
-This section is authoritative: don't assume something is configured just because a workflow file or config file exists in the repo, some of GitHub's settings can only be changed through the API or the web UI by someone with admin rights on the repository, not by committing a file. The state below was verified directly against the GitHub API on 2026-08-21, not assumed.
+This section is authoritative: don't assume something is configured just because a workflow file or config file exists in the repo, some of GitHub's settings can only be changed through the API or the web UI by someone with admin rights on the repository, not by committing a file. The state below was checked directly on 2026-08-21, not assumed, each item noted with how it was actually confirmed:
 
-**Configured (verified against `gh api repos/levimackay/perqora` and the branch protection endpoint):**
+**In the repository, and confirmed by their CI runs actually passing on `main`:**
 
-- CI (`.github/workflows/ci.yml`): lint, typecheck, unit tests, build, and end-to-end tests on every pull request and push to `main`. All four jobs are green on `main`.
+- CI (`.github/workflows/ci.yml`): lint, typecheck, unit tests, build, and end-to-end tests on every pull request and push to `main`. All four jobs are green.
 - CodeQL security scanning (`.github/workflows/codeql.yml`), on push, pull request, and a weekly schedule.
 - Dependency review on pull requests (`.github/workflows/dependency-review.yml`).
-- Dependabot version updates for npm packages and GitHub Actions (`.github/dependabot.yml`). Already opened real pull requests bumping outdated Actions versions and a stale `@types/node` range within minutes of the repository going public.
-- Dependabot security updates: enabled.
-- Secret scanning: enabled, including push protection.
 - Issue templates, a pull request template, and a code of conduct.
-- Repository description and topics (`student`, `student-discounts`, `education`, `benefits`, `deals`, `software`, `open-source`, `nextjs`, `typescript`, `postgres`).
-- **Branch protection on `main`**: pull request required, the four CI jobs (`lint-and-typecheck`, `test`, `build`, `e2e`) required and must be up to date before merging, conversation resolution required, force pushes disallowed, branch deletion disallowed, enforced for admins too (including the repository owner).
 
-Scriptable equivalent, if this ever needs to be reapplied (for example, after transferring the repository, or on a fork):
+**Repository-level settings, confirmed via `gh api repos/levimackay/perqora`:**
+
+- Dependabot version updates for npm packages and GitHub Actions (`.github/dependabot.yml`). Already opened real pull requests bumping outdated Actions versions and a stale `@types/node` range within minutes of the repository going public (`security_and_analysis.dependabot_security_updates.status`).
+- Secret scanning, including push protection (`security_and_analysis.secret_scanning.status` and `.secret_scanning_push_protection.status`).
+- Repository description and topics (`student`, `student-discounts`, `education`, `benefits`, `deals`, `software`, `open-source`, `nextjs`, `typescript`, `postgres`).
+
+**Branch protection on `main`, confirmed via `gh api repos/OWNER/REPO/branches/main/protection`:** pull request required, the four CI jobs (`lint-and-typecheck`, `test`, `build`, `e2e`) required and must be up to date before merging, conversation resolution required, force pushes disallowed, branch deletion disallowed, enforced for admins too (including the repository owner, which is why even a repo-owner push to `main` gets rejected and has to go through a pull request like any other change).
+
+Reusable command to (re)apply that branch protection, for example after transferring the repository or on a fork. Replace `OWNER/REPO` and `main` with the actual target, this repository's values aren't hard-coded below on purpose:
 
 ```bash
-gh api repos/levimackay/perqora/branches/main/protection \
+REPO="$(gh repo view --json nameWithOwner --jq .nameWithOwner)"
+BRANCH="main"
+
+gh api "repos/$REPO/branches/$BRANCH/protection" \
   --method PUT \
   -H "Accept: application/vnd.github+json" \
   --input - <<'JSON'

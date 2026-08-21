@@ -49,16 +49,32 @@ The app runs at `http://localhost:3000`. The admin area is at `/admin`, gated by
 
 ## Production deployment
 
-The app is designed to be deployed as a standard Next.js app (Vercel, or any Node.js host that supports the Next.js production server) at a subdomain of `levimackay.com`, `perqora.levimackay.com`. It is not hardcoded to that domain: set `NEXT_PUBLIC_APP_URL` to wherever it's actually deployed, that value drives metadata, Open Graph tags, and the sitemap.
+Live at [perqora.levimackay.com](https://perqora.levimackay.com). The app is not hardcoded to that domain: `NEXT_PUBLIC_APP_URL` drives metadata, Open Graph tags, and the sitemap, so the same build works at any URL.
 
-Required environment variables in production, same as `.env.example`:
+Current production setup, for reference if this ever needs to be reproduced or migrated:
 
-- `DATABASE_URL`, pointed at a production Postgres instance.
-- `NEXT_PUBLIC_APP_URL`, the real public URL, no trailing slash.
-- `NEXT_PUBLIC_APP_ENV=production`.
-- `ADMIN_ACCESS_TOKEN`, a long random value (`openssl rand -hex 32`), never the local dev placeholder.
+- **Hosting**: Vercel, project `perqora` under the `levibmackays-projects` team, linked to this GitHub repository. Every push to `main` deploys to production automatically (Vercel's default git integration behavior); this repo's own CI (lint/typecheck/test/build/e2e) and branch protection are what actually gate what reaches `main` in the first place.
+- **Database**: Neon Postgres, provisioned through the Vercel Marketplace integration (`vercel integration add neon`), which auto-injected `DATABASE_URL` (pooled, used by the deployed app) into the project's environment variables. Migrations and seeding were run once, directly, using Neon's unpooled connection string (`DATABASE_URL_UNPOOLED`), since DDL and a one-time seed don't benefit from connection pooling and some pooled/PgBouncer setups are stricter about the statements they'll accept.
+- **Domain**: `perqora.levimackay.com` is a Vercel-managed domain (`vercel domains add`) pointed at Vercel's anycast IP (`76.76.21.21`) via an A record on Cloudflare, since `levimackay.com`'s nameservers are Cloudflare's, not Vercel's. The record is DNS-only (not proxied through Cloudflare's edge), so Vercel can issue and manage its own TLS certificate for the subdomain directly.
+- **Environment variables** set on the Vercel project (Production environment): `DATABASE_URL`/`DATABASE_URL_UNPOOLED` and the rest of the Neon-provisioned variables (auto-managed by the integration, don't edit by hand), `NEXT_PUBLIC_APP_URL=https://perqora.levimackay.com`, `NEXT_PUBLIC_APP_ENV=production`, and `ADMIN_ACCESS_TOKEN` (a random 64-character hex value, generated once with `openssl rand -hex 32`, not the local dev placeholder).
 
-Run `pnpm db:deploy` (not `db:migrate`, which prompts interactively) as part of the deploy step, before the app starts serving traffic.
+To reproduce this setup for a fork or a new environment:
+
+```bash
+npm install -g vercel
+vercel link                          # inside the repo, pick/create the project
+vercel integration add neon          # provisions Postgres and injects DATABASE_URL
+vercel env pull .env.local           # get the generated connection strings locally
+DATABASE_URL="$(grep '^DATABASE_URL_UNPOOLED' .env.local | cut -d'"' -f2)" pnpm db:deploy
+DATABASE_URL="$(grep '^DATABASE_URL_UNPOOLED' .env.local | cut -d'"' -f2)" pnpm db:seed
+vercel env add NEXT_PUBLIC_APP_URL production
+vercel env add NEXT_PUBLIC_APP_ENV production
+vercel env add ADMIN_ACCESS_TOKEN production   # paste the output of: openssl rand -hex 32
+vercel domains add your-subdomain.example.com
+vercel domains inspect your-subdomain.example.com   # shows the DNS record to add
+# add that record at your DNS provider, then:
+vercel deploy --prod
+```
 
 ## GitHub repository configuration this project needs, and what's already been done automatically versus what a human has to do by hand
 

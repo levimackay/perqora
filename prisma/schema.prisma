@@ -1,0 +1,367 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Geography
+// ---------------------------------------------------------------------------
+
+model Country {
+  id   String @id @default(cuid())
+  code String @unique @db.Char(2) // ISO 3166-1 alpha-2
+  name String @unique
+
+  benefits BenefitCountry[]
+  schools  School[]
+
+  @@map("countries")
+}
+
+enum SchoolType {
+  UNIVERSITY
+  COMMUNITY_COLLEGE
+  TRADE_SCHOOL
+  HIGH_SCHOOL
+  BOOTCAMP
+  OTHER
+}
+
+model School {
+  id        String     @id @default(cuid())
+  slug      String     @unique
+  name      String
+  type      SchoolType @default(UNIVERSITY)
+  countryId String
+  country   Country    @relation(fields: [countryId], references: [id])
+  state     String?
+  city      String?
+  website   String?
+  logoUrl   String?
+
+  domains  SchoolDomain[]
+  benefits BenefitSchool[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([countryId])
+  @@map("schools")
+}
+
+model SchoolDomain {
+  id        String   @id @default(cuid())
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  domain    String   @unique
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([schoolId])
+  @@map("school_domains")
+}
+
+// ---------------------------------------------------------------------------
+// Taxonomy
+// ---------------------------------------------------------------------------
+
+model Category {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  description String?
+  icon        String?
+  sortOrder   Int     @default(0)
+
+  benefits Benefit[]
+
+  @@map("categories")
+}
+
+model Tag {
+  id   String @id @default(cuid())
+  slug String @unique
+  name String
+
+  benefits BenefitTag[]
+
+  @@map("tags")
+}
+
+// ---------------------------------------------------------------------------
+// Benefits
+// ---------------------------------------------------------------------------
+
+enum BenefitType {
+  FREE
+  DISCOUNT
+  CREDIT
+  FREE_TRIAL
+  EDUCATION_PRICING
+  STUDENT_PRICING
+  UNIVERSITY_PROVIDED
+  CONDITIONAL
+  REGION_SPECIFIC
+}
+
+enum VerificationStatus {
+  VERIFIED
+  NEEDS_REVIEW
+  STALE
+  UNVERIFIED
+}
+
+enum VerificationMethod {
+  MANUAL_REVIEW
+  AUTOMATED_FETCH
+  COMMUNITY_REPORT
+  PROVIDER_CONFIRMATION
+}
+
+enum PricePeriod {
+  ONE_TIME
+  MONTHLY
+  ANNUAL
+}
+
+model Benefit {
+  id          String @id @default(cuid())
+  slug        String @unique
+  name        String
+  provider    String
+  description String @db.Text
+
+  whatsIncluded String? @db.Text
+  whyClaim      String? @db.Text
+  howToClaim    String? @db.Text
+
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  subcategory String?
+
+  benefitType BenefitType
+
+  currency          String       @default("USD") @db.Char(3)
+  normalPriceCents  Int?
+  studentPriceCents Int?
+  pricePeriod       PricePeriod?
+  // Derived at write time from normal/student price when both are known.
+  // Nullable because savings cannot always be expressed as a fixed dollar amount.
+  estimatedSavingsCents Int?
+
+  eligibilitySummary      String      @db.Text
+  requiresVerifiedStudent Boolean     @default(true)
+  requiredSchoolType      SchoolType?
+  requiredEmailDomainHint String? // e.g. ".edu", a hint shown to users, not an enforced check
+  isSchoolRestricted      Boolean     @default(false) // true if only the linked schools qualify
+  isRegionRestricted      Boolean     @default(false) // true if only the linked countries qualify
+
+  claimUrl    String
+  officialUrl String
+  source      String
+
+  confidenceScore     Int                 @default(50) // 0-100
+  verificationStatus  VerificationStatus  @default(UNVERIFIED)
+  verificationMethod  VerificationMethod?
+  lastVerifiedAt      DateTime?
+  expiresAt           DateTime?
+
+  isActive   Boolean @default(true)
+  isFeatured Boolean @default(false)
+  viewCount  Int     @default(0)
+
+  countries BenefitCountry[]
+  tags      BenefitTag[]
+  schools   BenefitSchool[]
+
+  verifications  Verification[]
+  savedBy        SavedBenefit[]
+  analyticsEvents AnalyticsEvent[]
+  submission     Submission?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([benefitType])
+  @@index([verificationStatus])
+  @@index([isActive, isFeatured])
+  @@map("benefits")
+}
+
+model BenefitCountry {
+  benefitId String
+  benefit   Benefit @relation(fields: [benefitId], references: [id], onDelete: Cascade)
+  countryId String
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@id([benefitId, countryId])
+  @@map("benefit_countries")
+}
+
+model BenefitTag {
+  benefitId String
+  benefit   Benefit @relation(fields: [benefitId], references: [id], onDelete: Cascade)
+  tagId     String
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([benefitId, tagId])
+  @@map("benefit_tags")
+}
+
+model BenefitSchool {
+  benefitId String
+  benefit   Benefit @relation(fields: [benefitId], references: [id], onDelete: Cascade)
+  schoolId  String
+  school    School  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  @@id([benefitId, schoolId])
+  @@map("benefit_schools")
+}
+
+// ---------------------------------------------------------------------------
+// Verification trail (freshness is the product's core promise)
+// ---------------------------------------------------------------------------
+
+enum VerificationResult {
+  STILL_ACCURATE
+  CHANGED
+  EXPIRED
+  UNABLE_TO_VERIFY
+}
+
+model Verification {
+  id        String              @id @default(cuid())
+  benefitId String
+  benefit   Benefit             @relation(fields: [benefitId], references: [id], onDelete: Cascade)
+  method    VerificationMethod
+  result    VerificationResult
+  notes     String?             @db.Text
+  checkedBy String? // admin identifier or "system" for automated checks
+  createdAt DateTime            @default(now())
+
+  @@index([benefitId])
+  @@map("verifications")
+}
+
+// ---------------------------------------------------------------------------
+// Community submissions (moderation-gated, never auto-published)
+// ---------------------------------------------------------------------------
+
+enum SubmissionStatus {
+  PENDING
+  NEEDS_INFO
+  APPROVED
+  REJECTED
+}
+
+model Submission {
+  id                    String           @id @default(cuid())
+  benefitName           String
+  provider              String
+  url                   String
+  description           String           @db.Text
+  category              String
+  studentRequirements   String?          @db.Text
+  country                String?
+  notes                 String?          @db.Text
+  submitterEmail        String?
+
+  status       SubmissionStatus @default(PENDING)
+  reviewedBy   String?
+  reviewNotes  String?          @db.Text
+  reviewedAt   DateTime?
+
+  resultingBenefitId String?  @unique
+  resultingBenefit   Benefit? @relation(fields: [resultingBenefitId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([status])
+  @@map("submissions")
+}
+
+// ---------------------------------------------------------------------------
+// Anonymous personalization (no account required to use the product)
+// ---------------------------------------------------------------------------
+
+model DeviceProfile {
+  id            String   @id @default(cuid())
+  deviceId      String   @unique // random token stored in an httpOnly cookie
+  schoolId      String?
+  countryCode   String?
+  interests     String[] @default([])
+  savedBenefits SavedBenefit[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("device_profiles")
+}
+
+model SavedBenefit {
+  id              String        @id @default(cuid())
+  deviceProfileId String
+  deviceProfile   DeviceProfile @relation(fields: [deviceProfileId], references: [id], onDelete: Cascade)
+  benefitId       String
+  benefit         Benefit       @relation(fields: [benefitId], references: [id], onDelete: Cascade)
+  createdAt       DateTime      @default(now())
+
+  @@unique([deviceProfileId, benefitId])
+  @@map("saved_benefits")
+}
+
+// ---------------------------------------------------------------------------
+// Privacy-conscious product analytics (no PII, no third-party trackers)
+// ---------------------------------------------------------------------------
+
+enum AnalyticsEventType {
+  SEARCH
+  BENEFIT_VIEW
+  CATEGORY_VIEW
+  CLAIM_CLICK
+  BENEFIT_SAVED
+}
+
+model AnalyticsEvent {
+  id        String             @id @default(cuid())
+  type      AnalyticsEventType
+  benefitId String?
+  benefit   Benefit?           @relation(fields: [benefitId], references: [id], onDelete: SetNull)
+  metadata  Json?
+  createdAt DateTime           @default(now())
+
+  @@index([type, createdAt])
+  @@index([benefitId])
+  @@map("analytics_events")
+}
+
+// ---------------------------------------------------------------------------
+// Administration
+// ---------------------------------------------------------------------------
+
+enum AuditAction {
+  BENEFIT_CREATED
+  BENEFIT_UPDATED
+  BENEFIT_ARCHIVED
+  BENEFIT_VERIFIED
+  SUBMISSION_APPROVED
+  SUBMISSION_REJECTED
+  SUBMISSION_NEEDS_INFO
+}
+
+model AuditLog {
+  id         String      @id @default(cuid())
+  action     AuditAction
+  actor      String // admin identifier
+  targetType String // "Benefit" | "Submission"
+  targetId   String
+  detail     Json?
+  createdAt  DateTime    @default(now())
+
+  @@index([targetType, targetId])
+  @@map("audit_logs")
+}

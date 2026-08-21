@@ -1,0 +1,42 @@
+name: Benefit submission
+description: Know a real student benefit that's missing from Perqora? Prefer the in-app form at /submit, this template exists for people who'd rather use GitHub.
+labels: ["benefit-verification", "data-quality"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Benefit name
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: Provider
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Official URL
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What is it, and what does a student get
+    validations:
+      required: true
+  - type: input
+    id: requirements
+    attributes:
+      label: Student requirements
+      placeholder: "e.g. verified student email, enrollment at an accredited institution, specific country"
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I've personally confirmed this offer on the provider's official page, not just seen it mentioned elsewhere.
+          required: true

@@ -62,38 +62,42 @@ Run `pnpm db:deploy` (not `db:migrate`, which prompts interactively) as part of 
 
 ## GitHub repository configuration this project needs, and what's already been done automatically versus what a human has to do by hand
 
-This section is authoritative: don't assume something is configured just because a workflow file or config file exists in the repo, some of GitHub's settings can only be changed through the API or the web UI by someone with admin rights on the repository, not by committing a file.
+This section is authoritative: don't assume something is configured just because a workflow file or config file exists in the repo, some of GitHub's settings can only be changed through the API or the web UI by someone with admin rights on the repository, not by committing a file. The state below was verified directly against the GitHub API on 2026-08-21, not assumed.
 
-**Already configured by pushing files in this repository (no manual step needed):**
+**Configured (verified against `gh api repos/levimackay/perqora` and the branch protection endpoint):**
 
-- CI (`.github/workflows/ci.yml`): lint, typecheck, unit tests, build, and end-to-end tests on every pull request and push to `main`.
+- CI (`.github/workflows/ci.yml`): lint, typecheck, unit tests, build, and end-to-end tests on every pull request and push to `main`. All four jobs are green on `main`.
 - CodeQL security scanning (`.github/workflows/codeql.yml`), on push, pull request, and a weekly schedule.
 - Dependency review on pull requests (`.github/workflows/dependency-review.yml`).
-- Dependabot version updates for npm packages and GitHub Actions (`.github/dependabot.yml`).
+- Dependabot version updates for npm packages and GitHub Actions (`.github/dependabot.yml`). Already opened real pull requests bumping outdated Actions versions and a stale `@types/node` range within minutes of the repository going public.
+- Dependabot security updates: enabled.
+- Secret scanning: enabled, including push protection.
 - Issue templates, a pull request template, and a code of conduct.
+- Repository description and topics (`student`, `student-discounts`, `education`, `benefits`, `deals`, `software`, `open-source`, `nextjs`, `typescript`, `postgres`).
+- **Branch protection on `main`**: pull request required, the four CI jobs (`lint-and-typecheck`, `test`, `build`, `e2e`) required and must be up to date before merging, conversation resolution required, force pushes disallowed, branch deletion disallowed, enforced for admins too (including the repository owner).
 
-**Requires a manual step in the GitHub UI or API, by whoever has admin access to the repository (this cannot be done by pushing a commit):**
-
-- **Branch protection on `main`.** Settings → Branches → Add branch protection rule for `main`: require a pull request before merging, require the CI status checks (`lint-and-typecheck`, `test`, `build`, `e2e`) to pass before merging, require branches to be up to date before merging, disallow force pushes, disallow branch deletion, and consider requiring at least one approving review once there's more than one contributor. See `gh api` commands below for a scriptable version of the same thing.
-- **Enabling Dependabot security updates and secret scanning.** Settings → Code security and analysis: turn on "Dependabot alerts," "Dependabot security updates," and "Secret scanning" (and push protection, if available on the plan this repository is under). Dependabot version updates (the weekly PR bumps) work from the committed `dependabot.yml` alone, but the security-alert features are account/plan-level toggles.
-- **Repository description and topics.** Settings (or the repository's About panel): a short description and topics like `student`, `student-discounts`, `education`, `benefits`, `nextjs`, `typescript`, `postgres`, `open-source`.
-
-Scriptable equivalent for branch protection, once the repository exists and you have a token with `repo` scope:
+Scriptable equivalent, if this ever needs to be reapplied (for example, after transferring the repository, or on a fork):
 
 ```bash
 gh api repos/levimackay/perqora/branches/main/protection \
   --method PUT \
   -H "Accept: application/vnd.github+json" \
-  -f 'required_status_checks[strict]=true' \
-  -f 'required_status_checks[contexts][]=lint-and-typecheck' \
-  -f 'required_status_checks[contexts][]=test' \
-  -f 'required_status_checks[contexts][]=build' \
-  -f 'required_status_checks[contexts][]=e2e' \
-  -f 'enforce_admins=true' \
-  -f 'required_pull_request_reviews[required_approving_review_count]=0' \
-  -f 'restrictions=null' \
-  -f 'allow_force_pushes=false' \
-  -f 'allow_deletions=false'
+  --input - <<'JSON'
+{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": ["lint-and-typecheck", "test", "build", "e2e"]
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": { "required_approving_review_count": 0 },
+  "restrictions": null,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_conversation_resolution": true
+}
+JSON
 ```
 
-If this command was run as part of setting up this repository, it will be noted in the commit history or the pull request that introduced this file; check `git log SETUP.md` or the repository's branch protection settings directly rather than assuming.
+**Still worth doing by hand, not scriptable in a way that made sense to automate here:**
+
+- Once this project has more than one regular contributor, raise `required_approving_review_count` above `0` in the branch protection settings above.

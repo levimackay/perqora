@@ -12,9 +12,7 @@ Perqora indexes the free software, discounts, cloud credits, hardware pricing, a
 [![CodeQL](https://github.com/levimackay/perqora/actions/workflows/codeql.yml/badge.svg)](https://github.com/levimackay/perqora/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-informational)](LICENSE)
 
-[Contributing](CONTRIBUTING.md) &middot; [Setup](SETUP.md) &middot; [Design spec](DESIGN.md)
-
-Not yet deployed. The intended production URL is `perqora.levimackay.com`; see `SETUP.md` for the deployment checklist.
+[Live app](https://perqora.levimackay.com) &middot; [Contributing](CONTRIBUTING.md) &middot; [Setup](SETUP.md) &middot; [Design spec](DESIGN.md)
 
 </div>
 

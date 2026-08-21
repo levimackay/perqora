@@ -37,13 +37,13 @@ export default async function AdminBenefitEditPage({ params }: { params: Promise
     <div className="mx-auto max-w-3xl px-4 py-8">
       <AdminNav active="/admin/benefits" />
 
-      <h1 className="mt-6 text-2xl font-semibold text-text-primary">{benefit.name}</h1>
-      <p className="text-sm text-text-secondary">{benefit.provider}</p>
+      <h1 className="text-text-primary mt-6 text-2xl font-semibold">{benefit.name}</h1>
+      <p className="text-text-secondary text-sm">{benefit.provider}</p>
       <p className={`mt-3 font-mono text-sm ${freshnessToneClass(freshness.tone)}`}>{freshness.text}</p>
 
       <form
         action={updateBenefitVerificationAction}
-        className="mt-6 flex flex-col gap-5 rounded-md border border-surface-border bg-surface-raised p-5"
+        className="border-surface-border bg-surface-raised mt-6 flex flex-col gap-5 rounded-md border p-5"
       >
         <input type="hidden" name="benefitId" value={benefit.id} />
 
@@ -101,7 +101,7 @@ export default async function AdminBenefitEditPage({ params }: { params: Promise
           />
         </Field>
 
-        <label className="flex items-center gap-2 text-sm text-text-primary">
+        <label className="text-text-primary flex items-center gap-2 text-sm">
           <input type="checkbox" name="isActive" defaultChecked={benefit.isActive} />
           Active (visible on the public site)
         </label>
@@ -110,29 +110,31 @@ export default async function AdminBenefitEditPage({ params }: { params: Promise
           <textarea name="notes" rows={3} className={fieldClass} />
         </Field>
 
-        <p className="text-xs text-text-secondary">
+        <p className="text-text-secondary text-xs">
           Saving sets &quot;last verified&quot; to now, records a verification entry, and writes an audit log
           entry. It does not change the benefit&apos;s description, pricing, or eligibility text.
         </p>
 
         <button
           type="submit"
-          className="self-start rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-text-on-accent transition-colors duration-150 hover:bg-accent-600"
+          className="bg-accent text-text-on-accent hover:bg-accent-600 self-start rounded-md px-4 py-2.5 text-sm font-medium transition-colors duration-150"
         >
           Save verification
         </button>
       </form>
 
       <section className="mt-8">
-        <h2 className="text-xs font-medium tracking-wide text-text-secondary uppercase">Verification history</h2>
-        <ul className="mt-3 divide-y divide-surface-border border-t border-surface-border">
+        <h2 className="text-text-secondary text-xs font-medium tracking-wide uppercase">
+          Verification history
+        </h2>
+        <ul className="divide-surface-border border-surface-border mt-3 divide-y border-t">
           {benefit.verifications.length === 0 ? (
-            <li className="py-3 text-sm text-text-secondary">No verification checks recorded yet.</li>
+            <li className="text-text-secondary py-3 text-sm">No verification checks recorded yet.</li>
           ) : (
             benefit.verifications.map((verification) => (
               <li
                 key={verification.id}
-                className="flex flex-wrap items-center justify-between gap-3 py-3 font-mono text-xs text-text-primary"
+                className="text-text-primary flex flex-wrap items-center justify-between gap-3 py-3 font-mono text-xs"
               >
                 <span>{verification.result}</span>
                 <span className="text-text-secondary">{verification.method}</span>
@@ -149,7 +151,7 @@ export default async function AdminBenefitEditPage({ params }: { params: Promise
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <label className="flex flex-col gap-1 text-sm text-text-secondary">
+    <label className="text-text-secondary flex flex-col gap-1 text-sm">
       {label}
       {children}
     </label>

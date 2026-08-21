@@ -31,19 +31,19 @@ const COLUMNS = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-surface-border">
+    <footer className="border-surface-border mt-auto border-t">
       <Container className="grid gap-10 py-12 sm:grid-cols-[1.2fr_1fr_1fr_1fr]">
         <div>
           <span className="text-[17px] font-semibold">Perqora</span>
-          <p className="mt-3 max-w-xs text-sm text-text-secondary">
-            Independent, community-maintained, not affiliated with or endorsed by any university or
-            company named on this site. Offers change; verify before you rely on one.
+          <p className="text-text-secondary mt-3 max-w-xs text-sm">
+            Independent, community-maintained, not affiliated with or endorsed by any university or company
+            named on this site. Offers change; verify before you rely on one.
           </p>
         </div>
 
         {COLUMNS.map((column) => (
           <div key={column.heading}>
-            <h3 className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">
+            <h3 className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase">
               {column.heading}
             </h3>
             <ul className="mt-3 space-y-2">
@@ -51,7 +51,7 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="rounded-sm text-sm text-text-secondary transition-colors duration-150 hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    className="text-text-secondary hover:text-text-primary focus-visible:outline-accent rounded-sm text-sm transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
                     {link.label}
                   </Link>
@@ -62,7 +62,7 @@ export function SiteFooter() {
         ))}
       </Container>
 
-      <Container className="flex flex-col gap-2 border-t border-surface-border py-6 text-xs text-text-secondary sm:flex-row sm:items-center sm:justify-between">
+      <Container className="border-surface-border text-text-secondary flex flex-col gap-2 border-t py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
         <p>All trademarks belong to their respective owners.</p>
         <p className="font-mono-data">Perqora is open source, MIT licensed.</p>
       </Container>

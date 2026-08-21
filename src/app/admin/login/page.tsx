@@ -13,31 +13,31 @@ export default async function AdminLoginPage({
   return (
     <div className="mx-auto flex max-w-sm flex-col gap-6 px-4 py-16">
       <div>
-        <h1 className="text-2xl font-semibold text-text-primary">Admin access</h1>
-        <p className="mt-2 text-sm text-text-secondary">Enter the shared admin token to continue.</p>
+        <h1 className="text-text-primary text-2xl font-semibold">Admin access</h1>
+        <p className="text-text-secondary mt-2 text-sm">Enter the shared admin token to continue.</p>
       </div>
 
       <form action={loginAction} className="flex flex-col gap-4">
-        <label className="flex flex-col gap-2 text-sm text-text-secondary">
+        <label className="text-text-secondary flex flex-col gap-2 text-sm">
           Access token
           <input
             type="password"
             name="token"
             required
             autoFocus
-            className="rounded-md border border-control-border bg-surface-raised px-3 py-2 text-text-primary outline-none focus-visible:border-accent"
+            className="border-control-border bg-surface-raised text-text-primary focus-visible:border-accent rounded-md border px-3 py-2 outline-none"
           />
         </label>
 
         {error ? (
-          <p className="text-sm text-status-error" role="alert">
+          <p className="text-status-error text-sm" role="alert">
             That token is not valid.
           </p>
         ) : null}
 
         <button
           type="submit"
-          className="rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-text-on-accent transition-colors duration-150 hover:bg-accent-600"
+          className="bg-accent text-text-on-accent hover:bg-accent-600 rounded-md px-4 py-2.5 text-sm font-medium transition-colors duration-150"
         >
           Continue
         </button>

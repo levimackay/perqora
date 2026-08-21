@@ -4,10 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 // Called by the unsave action on the /saved page and by the save/unsave
 // toggle button when a benefit is already saved.
-export async function DELETE(
-  _request: Request,
-  { params }: { params: Promise<{ benefitId: string }> },
-) {
+export async function DELETE(_request: Request, { params }: { params: Promise<{ benefitId: string }> }) {
   const { benefitId } = await params;
 
   const profile = await getDeviceProfile();

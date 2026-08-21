@@ -7,7 +7,11 @@ import "server-only";
  */
 const windows = new Map<string, { count: number; resetAt: number }>();
 
-export function rateLimit(key: string, limit: number, windowMs: number): { allowed: boolean; remaining: number } {
+export function rateLimit(
+  key: string,
+  limit: number,
+  windowMs: number,
+): { allowed: boolean; remaining: number } {
   const now = Date.now();
   const existing = windows.get(key);
 

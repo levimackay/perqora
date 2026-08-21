@@ -12,7 +12,7 @@ export function ClaimButton({ benefitId, claimUrl }: { benefitId: string; claimU
         // Fire-and-forget: the tab opens regardless of whether this resolves.
         logClaimClick(benefitId).catch(() => undefined);
       }}
-      className="inline-flex items-center justify-center gap-2 rounded-md bg-accent px-6 py-3 text-[15px] font-medium text-text-on-accent transition-colors duration-150 ease-[var(--ease-standard)] hover:bg-accent-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      className="bg-accent text-text-on-accent hover:bg-accent-600 focus-visible:outline-accent inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-[15px] font-medium transition-colors duration-150 ease-[var(--ease-standard)] focus-visible:outline-2 focus-visible:outline-offset-2"
     >
       Claim benefit &rarr;
     </a>

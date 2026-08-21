@@ -33,19 +33,19 @@ The app runs at `http://localhost:3000`. The admin area is at `/admin`, gated by
 
 ## Scripts
 
-| Script | What it does |
-| --- | --- |
-| `pnpm dev` | Start the dev server (Turbopack) |
-| `pnpm build` / `pnpm start` | Production build and serve |
-| `pnpm lint` / `pnpm format` / `pnpm format:check` | ESLint / Prettier |
-| `pnpm typecheck` | `tsc --noEmit` |
-| `pnpm test` / `pnpm test:watch` | Vitest unit tests |
-| `pnpm test:e2e` | Playwright end-to-end tests (run `pnpm exec playwright install` once first) |
-| `pnpm db:migrate` | Create and apply a new migration in development |
-| `pnpm db:deploy` | Apply existing migrations without prompting (used in CI/production) |
-| `pnpm db:seed` | Load the seed data in `prisma/seed.ts` |
-| `pnpm db:studio` | Prisma Studio, a GUI for the local database |
-| `pnpm db:reset` | Drop and recreate the local database from migrations, then reseed |
+| Script                                            | What it does                                                                |
+| ------------------------------------------------- | --------------------------------------------------------------------------- |
+| `pnpm dev`                                        | Start the dev server (Turbopack)                                            |
+| `pnpm build` / `pnpm start`                       | Production build and serve                                                  |
+| `pnpm lint` / `pnpm format` / `pnpm format:check` | ESLint / Prettier                                                           |
+| `pnpm typecheck`                                  | `tsc --noEmit`                                                              |
+| `pnpm test` / `pnpm test:watch`                   | Vitest unit tests                                                           |
+| `pnpm test:e2e`                                   | Playwright end-to-end tests (run `pnpm exec playwright install` once first) |
+| `pnpm db:migrate`                                 | Create and apply a new migration in development                             |
+| `pnpm db:deploy`                                  | Apply existing migrations without prompting (used in CI/production)         |
+| `pnpm db:seed`                                    | Load the seed data in `prisma/seed.ts`                                      |
+| `pnpm db:studio`                                  | Prisma Studio, a GUI for the local database                                 |
+| `pnpm db:reset`                                   | Drop and recreate the local database from migrations, then reseed           |
 
 ## Production deployment
 
@@ -65,6 +65,7 @@ Run `pnpm db:deploy` (not `db:migrate`, which prompts interactively) as part of 
 This section is authoritative: don't assume something is configured just because a workflow file or config file exists in the repo, some of GitHub's settings can only be changed through the API or the web UI by someone with admin rights on the repository, not by committing a file.
 
 **Already configured by pushing files in this repository (no manual step needed):**
+
 - CI (`.github/workflows/ci.yml`): lint, typecheck, unit tests, build, and end-to-end tests on every pull request and push to `main`.
 - CodeQL security scanning (`.github/workflows/codeql.yml`), on push, pull request, and a weekly schedule.
 - Dependency review on pull requests (`.github/workflows/dependency-review.yml`).
@@ -72,6 +73,7 @@ This section is authoritative: don't assume something is configured just because
 - Issue templates, a pull request template, and a code of conduct.
 
 **Requires a manual step in the GitHub UI or API, by whoever has admin access to the repository (this cannot be done by pushing a commit):**
+
 - **Branch protection on `main`.** Settings → Branches → Add branch protection rule for `main`: require a pull request before merging, require the CI status checks (`lint-and-typecheck`, `test`, `build`, `e2e`) to pass before merging, require branches to be up to date before merging, disallow force pushes, disallow branch deletion, and consider requiring at least one approving review once there's more than one contributor. See `gh api` commands below for a scriptable version of the same thing.
 - **Enabling Dependabot security updates and secret scanning.** Settings → Code security and analysis: turn on "Dependabot alerts," "Dependabot security updates," and "Secret scanning" (and push protection, if available on the plan this repository is under). Dependabot version updates (the weekly PR bumps) work from the committed `dependabot.yml` alone, but the security-alert features are account/plan-level toggles.
 - **Repository description and topics.** Settings (or the repository's About panel): a short description and topics like `student`, `student-discounts`, `education`, `benefits`, `nextjs`, `typescript`, `postgres`, `open-source`.

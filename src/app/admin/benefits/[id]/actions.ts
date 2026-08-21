@@ -7,7 +7,12 @@ import { prisma } from "@/lib/prisma";
 const benefitVerificationSchema = z.object({
   benefitId: z.string().trim().min(1),
   verificationStatus: z.enum(["VERIFIED", "NEEDS_REVIEW", "STALE", "UNVERIFIED"]),
-  verificationMethod: z.enum(["MANUAL_REVIEW", "AUTOMATED_FETCH", "COMMUNITY_REPORT", "PROVIDER_CONFIRMATION"]),
+  verificationMethod: z.enum([
+    "MANUAL_REVIEW",
+    "AUTOMATED_FETCH",
+    "COMMUNITY_REPORT",
+    "PROVIDER_CONFIRMATION",
+  ]),
   verificationResult: z.enum(["STILL_ACCURATE", "CHANGED", "EXPIRED", "UNABLE_TO_VERIFY"]),
   expiresAt: z.string().trim().optional(),
   confidenceScore: z.coerce.number().int().min(0).max(100),

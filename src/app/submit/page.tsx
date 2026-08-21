@@ -13,12 +13,12 @@ export default async function SubmitPage() {
 
   return (
     <Container as="section" className="max-w-2xl py-10 sm:py-16">
-      <header className="border-b border-surface-border pb-6">
-        <p className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">Submit</p>
-        <h1 className="mt-2 text-[28px] leading-[1.15] font-semibold tracking-[-0.01em] text-text-primary">
+      <header className="border-surface-border border-b pb-6">
+        <p className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase">Submit</p>
+        <h1 className="text-text-primary mt-2 text-[28px] leading-[1.15] font-semibold tracking-[-0.01em]">
           Submit a benefit
         </h1>
-        <p className="mt-3 text-[16px] leading-[1.6] text-text-secondary">
+        <p className="text-text-secondary mt-3 text-[16px] leading-[1.6]">
           Every submission goes into a review queue and is checked against the provider&apos;s page before it
           publishes. Nothing here goes live automatically.
         </p>

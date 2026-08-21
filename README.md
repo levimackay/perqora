@@ -77,16 +77,16 @@ Data flows one direction: pages and route handlers call the functions in `src/li
 
 ## Tech stack
 
-| Layer | Choice | Why |
-| --- | --- | --- |
-| Framework | Next.js 16 (App Router, Turbopack) | Server components by default fit a data-heavy, read-mostly app; route handlers cover the small amount of real client interactivity. |
-| Language | TypeScript | End-to-end type safety from the database to the page. |
-| Styling | Tailwind CSS v4 | CSS-first theme config maps directly onto `DESIGN.md`'s token spec. |
-| Database | PostgreSQL | Relational integrity for eligibility rules, verification history, and moderation state actually matters here. |
-| ORM | Prisma 7 (`@prisma/adapter-pg` driver adapter) | Type-safe queries and migrations; the driver-adapter model is Prisma 7's new default. |
-| Validation | Zod | Every request body and query string is validated server-side before it touches the database. |
-| Testing | Vitest, Testing Library, Playwright | Unit tests for calculation/eligibility logic, end-to-end tests for the golden path. |
-| Package manager | pnpm | Fast, disk-efficient, strict dependency resolution. |
+| Layer           | Choice                                         | Why                                                                                                                                 |
+| --------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Framework       | Next.js 16 (App Router, Turbopack)             | Server components by default fit a data-heavy, read-mostly app; route handlers cover the small amount of real client interactivity. |
+| Language        | TypeScript                                     | End-to-end type safety from the database to the page.                                                                               |
+| Styling         | Tailwind CSS v4                                | CSS-first theme config maps directly onto `DESIGN.md`'s token spec.                                                                 |
+| Database        | PostgreSQL                                     | Relational integrity for eligibility rules, verification history, and moderation state actually matters here.                       |
+| ORM             | Prisma 7 (`@prisma/adapter-pg` driver adapter) | Type-safe queries and migrations; the driver-adapter model is Prisma 7's new default.                                               |
+| Validation      | Zod                                            | Every request body and query string is validated server-side before it touches the database.                                        |
+| Testing         | Vitest, Testing Library, Playwright            | Unit tests for calculation/eligibility logic, end-to-end tests for the golden path.                                                 |
+| Package manager | pnpm                                           | Fast, disk-efficient, strict dependency resolution.                                                                                 |
 
 Every dependency in `package.json` is there because a specific piece of the product needs it, see `THIRD_PARTY_NOTICES.md` for the full list and licenses.
 

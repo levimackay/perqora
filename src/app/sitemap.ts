@@ -8,7 +8,11 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 // benefits list, categories index, and cs-stack), so the sitemap stays
 // complete even though this file only builds the schools/saved/about/etc.
 // pages itself.
-const STATIC_ROUTES: Array<{ path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }> = [
+const STATIC_ROUTES: Array<{
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+}> = [
   { path: "/", changeFrequency: "daily", priority: 1 },
   { path: "/discover", changeFrequency: "weekly", priority: 0.9 },
   { path: "/benefits", changeFrequency: "daily", priority: 0.9 },

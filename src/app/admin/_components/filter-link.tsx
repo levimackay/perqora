@@ -6,8 +6,8 @@ export function FilterLink({ label, href, active }: { label: string; href: strin
       href={href}
       className={
         active
-          ? "rounded-md bg-surface-raised px-3 py-1.5 font-medium text-text-primary"
-          : "rounded-md border border-surface-border px-3 py-1.5 text-text-secondary transition-colors duration-150 hover:text-text-primary"
+          ? "bg-surface-raised text-text-primary rounded-md px-3 py-1.5 font-medium"
+          : "border-surface-border text-text-secondary hover:text-text-primary rounded-md border px-3 py-1.5 transition-colors duration-150"
       }
     >
       {label}

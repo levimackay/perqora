@@ -50,11 +50,11 @@ export default async function BenefitsPage({ searchParams }: PageProps<"/benefit
   return (
     <section>
       <Container className="py-10 sm:py-16">
-        <p className="font-mono-data text-[11px] tracking-[0.03em] text-text-secondary uppercase">Index</p>
-        <h1 className="mt-2 text-[40px] leading-[1.05] font-bold tracking-[-0.02em] text-text-primary sm:text-[64px]">
+        <p className="font-mono-data text-text-secondary text-[11px] tracking-[0.03em] uppercase">Index</p>
+        <h1 className="text-text-primary mt-2 text-[40px] leading-[1.05] font-bold tracking-[-0.02em] sm:text-[64px]">
           All benefits
         </h1>
-        <p className="mt-3 max-w-[65ch] text-text-secondary">
+        <p className="text-text-secondary mt-3 max-w-[65ch]">
           Every benefit Perqora tracks, filterable and linkable. {benefits.length} shown
           {hasFilters ? " for this filter." : "."}
         </p>

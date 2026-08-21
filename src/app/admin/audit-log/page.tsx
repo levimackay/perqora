@@ -29,35 +29,37 @@ export default async function AdminAuditLogPage({
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <AdminNav active="/admin/audit-log" />
-      <h1 className="mt-6 text-2xl font-semibold text-text-primary">Audit log</h1>
-      <p className="mt-1 text-sm text-text-secondary">
+      <h1 className="text-text-primary mt-6 text-2xl font-semibold">Audit log</h1>
+      <p className="text-text-secondary mt-1 text-sm">
         Read-only history of admin actions, most recent first ({total} total).
       </p>
 
       <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[40rem] border-collapse text-sm">
           <thead>
-            <tr className="border-b border-surface-border text-left text-xs text-text-secondary uppercase">
+            <tr className="border-surface-border text-text-secondary border-b text-left text-xs uppercase">
               <th className="py-2 pr-4 font-medium">Action</th>
               <th className="py-2 pr-4 font-medium">Actor</th>
               <th className="py-2 pr-4 font-medium">Target</th>
               <th className="py-2 font-medium">When</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-surface-border font-mono text-xs">
+          <tbody className="divide-surface-border divide-y font-mono text-xs">
             {entries.map((entry) => (
               <tr key={entry.id}>
-                <td className="py-2 pr-4 text-text-primary">{entry.action}</td>
-                <td className="py-2 pr-4 text-text-secondary">{entry.actor}</td>
-                <td className="py-2 pr-4 text-text-secondary">
+                <td className="text-text-primary py-2 pr-4">{entry.action}</td>
+                <td className="text-text-secondary py-2 pr-4">{entry.actor}</td>
+                <td className="text-text-secondary py-2 pr-4">
                   {entry.targetType}:{entry.targetId}
                 </td>
-                <td className="py-2 text-text-secondary">{entry.createdAt.toISOString()}</td>
+                <td className="text-text-secondary py-2">{entry.createdAt.toISOString()}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        {entries.length === 0 ? <p className="py-6 text-sm text-text-secondary">No audit log entries yet.</p> : null}
+        {entries.length === 0 ? (
+          <p className="text-text-secondary py-6 text-sm">No audit log entries yet.</p>
+        ) : null}
       </div>
 
       {totalPages > 1 ? (
@@ -65,7 +67,7 @@ export default async function AdminAuditLogPage({
           {page > 1 ? (
             <Link
               href={`/admin/audit-log?page=${page - 1}`}
-              className="rounded-md border border-surface-border px-3 py-1.5 text-text-secondary hover:text-text-primary"
+              className="border-surface-border text-text-secondary hover:text-text-primary rounded-md border px-3 py-1.5"
             >
               Previous
             </Link>
@@ -76,7 +78,7 @@ export default async function AdminAuditLogPage({
           {page < totalPages ? (
             <Link
               href={`/admin/audit-log?page=${page + 1}`}
-              className="rounded-md border border-surface-border px-3 py-1.5 text-text-secondary hover:text-text-primary"
+              className="border-surface-border text-text-secondary hover:text-text-primary rounded-md border px-3 py-1.5"
             >
               Next
             </Link>

@@ -30,7 +30,7 @@ export default async function AdminBenefitsPage({
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <AdminNav active="/admin/benefits" />
-      <h1 className="mt-6 text-2xl font-semibold text-text-primary">Benefits</h1>
+      <h1 className="text-text-primary mt-6 text-2xl font-semibold">Benefits</h1>
 
       <div className="mt-4 flex flex-wrap gap-2 text-sm">
         <FilterLink label="All" href="/admin/benefits" active={!filterStatus} />
@@ -42,7 +42,7 @@ export default async function AdminBenefitsPage({
       <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[40rem] border-collapse text-sm">
           <thead>
-            <tr className="border-b border-surface-border text-left text-xs text-text-secondary uppercase">
+            <tr className="border-surface-border text-text-secondary border-b text-left text-xs uppercase">
               <th className="py-2 pr-4 font-medium">Name</th>
               <th className="py-2 pr-4 font-medium">Category</th>
               <th className="py-2 pr-4 font-medium">Status</th>
@@ -50,32 +50,35 @@ export default async function AdminBenefitsPage({
               <th className="py-2 font-medium">Active</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-surface-border">
+          <tbody className="divide-surface-border divide-y">
             {benefits.map((benefit) => {
               const freshness = describeFreshness(benefit.verificationStatus, benefit.lastVerifiedAt);
               return (
                 <tr key={benefit.id}>
                   <td className="py-2 pr-4">
-                    <Link href={`/admin/benefits/${benefit.id}`} className="text-text-primary hover:text-accent">
+                    <Link
+                      href={`/admin/benefits/${benefit.id}`}
+                      className="text-text-primary hover:text-accent"
+                    >
                       {benefit.name}
                     </Link>
-                    <p className="text-xs text-text-secondary">{benefit.provider}</p>
+                    <p className="text-text-secondary text-xs">{benefit.provider}</p>
                   </td>
-                  <td className="py-2 pr-4 text-text-secondary">{benefit.category.name}</td>
+                  <td className="text-text-secondary py-2 pr-4">{benefit.category.name}</td>
                   <td className="py-2 pr-4">
                     <StatusChip status={benefit.verificationStatus} />
                   </td>
                   <td className={`py-2 pr-4 font-mono text-xs ${freshnessToneClass(freshness.tone)}`}>
                     {freshness.text}
                   </td>
-                  <td className="py-2 text-text-secondary">{benefit.isActive ? "Yes" : "No"}</td>
+                  <td className="text-text-secondary py-2">{benefit.isActive ? "Yes" : "No"}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
         {benefits.length === 0 ? (
-          <p className="py-6 text-sm text-text-secondary">No benefits match this filter.</p>
+          <p className="text-text-secondary py-6 text-sm">No benefits match this filter.</p>
         ) : null}
       </div>
     </div>

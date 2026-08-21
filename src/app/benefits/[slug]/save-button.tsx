@@ -56,8 +56,10 @@ export function SaveButton({ benefitId }: { benefitId: string }) {
       disabled={status === "checking"}
       aria-pressed={saved}
       className={cx(
-        "inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3 text-[15px] font-medium transition-colors duration-150 ease-[var(--ease-standard)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50",
-        saved ? "border-accent text-accent" : "border-surface-border text-text-primary hover:border-accent/50",
+        "focus-visible:outline-accent inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3 text-[15px] font-medium transition-colors duration-150 ease-[var(--ease-standard)] focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50",
+        saved
+          ? "border-accent text-accent"
+          : "border-surface-border text-text-primary hover:border-accent/50",
       )}
     >
       {saved ? "Saved" : "Save for later"}

@@ -14,12 +14,12 @@ export const metadata: Metadata = {
 
 function EmptyState() {
   return (
-    <div className="mt-4 rounded-md border border-surface-border px-6 py-14 text-center">
-      <p className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">
+    <div className="border-surface-border mt-4 rounded-md border px-6 py-14 text-center">
+      <p className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase">
         No device profile yet
       </p>
-      <p className="mt-3 text-[19px] leading-[1.6] text-text-primary">Nothing saved yet.</p>
-      <p className="mx-auto mt-2 max-w-md text-sm text-text-secondary">
+      <p className="text-text-primary mt-3 text-[19px] leading-[1.6]">Nothing saved yet.</p>
+      <p className="text-text-secondary mx-auto mt-2 max-w-md text-sm">
         Save a benefit from its listing page and it shows up here. Saves are tied to this browser, not an
         account, so there&apos;s nothing to sign in to.
       </p>
@@ -52,37 +52,37 @@ export default async function SavedPage() {
 
   return (
     <Container as="section" className="py-10 sm:py-16">
-      <header className="max-w-2xl border-b border-surface-border pb-6">
-        <p className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">Saved</p>
-        <h1 className="mt-2 text-[28px] leading-[1.15] font-semibold tracking-[-0.01em] text-text-primary">
+      <header className="border-surface-border max-w-2xl border-b pb-6">
+        <p className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase">Saved</p>
+        <h1 className="text-text-primary mt-2 text-[28px] leading-[1.15] font-semibold tracking-[-0.01em]">
           Your saved benefits
         </h1>
-        <p className="mt-3 text-[16px] leading-[1.6] text-text-secondary">
+        <p className="text-text-secondary mt-3 text-[16px] leading-[1.6]">
           Kept locally to this browser via an anonymous cookie, no account required.
         </p>
       </header>
 
       {benefits.length > 0 && (
-        <div className="mt-4 grid grid-cols-2 gap-4 border-b border-surface-border pb-6 sm:grid-cols-4">
+        <div className="border-surface-border mt-4 grid grid-cols-2 gap-4 border-b pb-6 sm:grid-cols-4">
           <div>
-            <p className="font-mono-data text-2xl font-semibold text-accent">
+            <p className="font-mono-data text-accent text-2xl font-semibold">
               {formatCents(summary.totalAnnualCents)}
             </p>
-            <p className="font-mono-data mt-1 text-[11px] tracking-[0.03em] text-text-secondary uppercase">
+            <p className="font-mono-data text-text-secondary mt-1 text-[11px] tracking-[0.03em] uppercase">
               Potential annual value
             </p>
           </div>
           <div>
-            <p className="font-mono-data text-2xl font-semibold text-text-primary">{summary.totalBenefits}</p>
-            <p className="font-mono-data mt-1 text-[11px] tracking-[0.03em] text-text-secondary uppercase">
+            <p className="font-mono-data text-text-primary text-2xl font-semibold">{summary.totalBenefits}</p>
+            <p className="font-mono-data text-text-secondary mt-1 text-[11px] tracking-[0.03em] uppercase">
               Saved benefits
             </p>
           </div>
           <div>
-            <p className="font-mono-data text-2xl font-semibold text-text-primary">
+            <p className="font-mono-data text-text-primary text-2xl font-semibold">
               {summary.benefitsWithValue}
             </p>
-            <p className="font-mono-data mt-1 text-[11px] tracking-[0.03em] text-text-secondary uppercase">
+            <p className="font-mono-data text-text-secondary mt-1 text-[11px] tracking-[0.03em] uppercase">
               With a priced value
             </p>
           </div>

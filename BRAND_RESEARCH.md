@@ -27,6 +27,7 @@ The name needed to be distinctive, short, easy to pronounce and spell, appropria
 Root: "perquisite," the word for a benefit or privilege granted by virtue of a position or status, which is precisely the product's premise (what your student status entitles you to). Constructed as an invented word (Perqora is not a dictionary term), which keeps it ownable and reduces the odds of colliding with an existing generic-word product the way several rejected candidates did.
 
 **Search results at time of writing:** no company, app, GitHub project, npm package, or PyPI package found operating under this name in the student-benefits space or elsewhere. A closely related search term, "PERQ," returned an unrelated multifamily-real-estate marketing SaaS company, different spelling, different category, low practical confusion risk. Registry checks:
+
 - npm: `perqora` unregistered.
 - PyPI: `perqora` unregistered.
 - GitHub: no organization or repository named `perqora`; a single personal user account with that exact username exists (empty, zero public repos, created earlier this year), which does not block using the name for a repository under a different account, but is worth knowing about.

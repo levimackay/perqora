@@ -30,13 +30,15 @@ export default async function CsStackPage() {
 
   return (
     <section>
-      <section className="grid-surface hero-glow border-b border-surface-border">
+      <section className="grid-surface hero-glow border-surface-border border-b">
         <Container className="py-16 sm:py-24">
-          <p className="font-mono-data text-[11px] tracking-[0.03em] text-accent uppercase">CS student stack</p>
-          <h1 className="mt-2 max-w-3xl text-[40px] leading-[1.05] font-bold tracking-[-0.02em] text-text-primary sm:text-[64px]">
+          <p className="font-mono-data text-accent text-[11px] tracking-[0.03em] uppercase">
+            CS student stack
+          </p>
+          <h1 className="text-text-primary mt-2 max-w-3xl text-[40px] leading-[1.05] font-bold tracking-[-0.02em] sm:text-[64px]">
             The toolchain, not a coupon list.
           </h1>
-          <p className="mt-4 max-w-[65ch] text-[19px] leading-[1.6] text-text-secondary">
+          <p className="text-text-secondary mt-4 max-w-[65ch] text-[19px] leading-[1.6]">
             The GitHub Student Developer Pack is the flagship benefit here, a single application that unlocks
             cloud credits, IDE licenses, and developer tooling from dozens of providers at once. This page
             collects it alongside the other tools a CS or software student installs early: cloud platforms to
@@ -51,7 +53,7 @@ export default async function CsStackPage() {
         <div className="flex flex-col gap-14">
           {groups.map((group) => (
             <div key={group.name}>
-              <h2 className="text-[28px] leading-[1.15] font-semibold tracking-[-0.01em] text-text-primary">
+              <h2 className="text-text-primary text-[28px] leading-[1.15] font-semibold tracking-[-0.01em]">
                 {group.name}
               </h2>
               <div className="mt-4">

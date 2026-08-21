@@ -18,7 +18,10 @@ test("visit, personalize, browse, open, save, and see savings", async ({ page })
   const interestChip = page.getByText("Software Development", { exact: false }).first();
   await expect(interestChip).toBeVisible();
   await interestChip.click();
-  await page.getByRole("button", { name: /continue|see|results|find/i }).first().click();
+  await page
+    .getByRole("button", { name: /continue|see|results|find/i })
+    .first()
+    .click();
 
   await expect(page.getByText(/potential annual value/i)).toBeVisible();
   const resultLink = page.getByRole("link", { name: /GitHub Student Developer Pack/i }).first();
@@ -59,7 +62,10 @@ test("submitting a benefit shows a pending-review confirmation, not an instant p
 
   await page.getByLabel(/benefit name/i).fill("Test Benefit From E2E");
   await page.getByLabel(/provider/i).fill("Test Provider");
-  await page.getByLabel(/^url|official url/i).first().fill("https://example.com/student-offer");
+  await page
+    .getByLabel(/^url|official url/i)
+    .first()
+    .fill("https://example.com/student-offer");
   await page
     .getByLabel(/description/i)
     .fill("A benefit submitted by an automated end to end test, at least twenty characters long.");

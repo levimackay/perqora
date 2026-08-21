@@ -17,9 +17,11 @@ const BENEFIT_TYPE_DESCRIPTIONS: Record<string, string> = {
   FREE_TRIAL: "A time-limited free period on a product that is normally paid, converts to paid after.",
   EDUCATION_PRICING: "A standing lower price tier for students and educators, not a temporary promotion.",
   STUDENT_PRICING: "A student-specific price, usually verified against a .edu email or student ID.",
-  UNIVERSITY_PROVIDED: "Provided through your school directly (a site license, a lab account), not the vendor.",
+  UNIVERSITY_PROVIDED:
+    "Provided through your school directly (a site license, a lab account), not the vendor.",
   CONDITIONAL: "Depends on something beyond just being a student, a major, a course, a region, a cohort.",
-  REGION_SPECIFIC: "Only available in specific countries or regions, check the listing before counting on it.",
+  REGION_SPECIFIC:
+    "Only available in specific countries or regions, check the listing before counting on it.",
 };
 
 const STATUS_ROWS: Array<{ freshness: FreshnessLabel; description: string }> = [
@@ -43,39 +45,39 @@ const STATUS_ROWS: Array<{ freshness: FreshnessLabel; description: string }> = [
 export default function HowItWorksPage() {
   return (
     <Container as="section" className="max-w-3xl py-10 sm:py-16">
-      <header className="border-b border-surface-border pb-6">
-        <p className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">How it works</p>
-        <h1 className="mt-2 text-[28px] leading-[1.15] font-semibold tracking-[-0.01em] text-text-primary">
+      <header className="border-surface-border border-b pb-6">
+        <p className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase">How it works</p>
+        <h1 className="text-text-primary mt-2 text-[28px] leading-[1.15] font-semibold tracking-[-0.01em]">
           The mechanics, not the pitch
         </h1>
       </header>
 
       <div className="mt-8 space-y-12">
         <section>
-          <h2 className="text-[19px] font-semibold text-text-primary">Eligibility detection</h2>
-          <p className="mt-3 max-w-[65ch] text-[16px] leading-[1.6] text-text-secondary">
+          <h2 className="text-text-primary text-[19px] font-semibold">Eligibility detection</h2>
+          <p className="text-text-secondary mt-3 max-w-[65ch] text-[16px] leading-[1.6]">
             Perqora doesn&apos;t verify enrollment through a third-party service. Instead, when you enter your
             school or email domain, it matches your domain against a directory of known school email domains
-            (for example a .edu suffix, or a school&apos;s specific domain) and shows benefits whose eligibility
-            hints line up. This is a hint for you, not a gate: it narrows the list to what&apos;s likely relevant,
-            it doesn&apos;t verify your enrollment with the provider. Every benefit still requires you to
-            confirm eligibility on the provider&apos;s own site when you claim it.
+            (for example a .edu suffix, or a school&apos;s specific domain) and shows benefits whose
+            eligibility hints line up. This is a hint for you, not a gate: it narrows the list to what&apos;s
+            likely relevant, it doesn&apos;t verify your enrollment with the provider. Every benefit still
+            requires you to confirm eligibility on the provider&apos;s own site when you claim it.
           </p>
         </section>
 
         <section>
-          <h2 className="text-[19px] font-semibold text-text-primary">Benefit types</h2>
-          <p className="mt-3 max-w-[65ch] text-[16px] leading-[1.6] text-text-secondary">
+          <h2 className="text-text-primary text-[19px] font-semibold">Benefit types</h2>
+          <p className="text-text-secondary mt-3 max-w-[65ch] text-[16px] leading-[1.6]">
             Every listing carries one of nine benefit types, shown as a small label on the row instead of
             buried in the description.
           </p>
-          <dl className="mt-5 divide-y divide-surface-border border-y border-surface-border">
+          <dl className="divide-surface-border border-surface-border mt-5 divide-y border-y">
             {Object.entries(BENEFIT_TYPE_LABELS).map(([key, label]) => (
               <div key={key} className="grid grid-cols-1 gap-1 py-4 sm:grid-cols-[200px_1fr] sm:gap-6">
-                <dt className="font-mono-data text-[11px] tracking-[0.03em] text-text-primary uppercase">
+                <dt className="font-mono-data text-text-primary text-[11px] tracking-[0.03em] uppercase">
                   {label}
                 </dt>
-                <dd className="text-sm leading-[1.6] text-text-secondary">
+                <dd className="text-text-secondary text-sm leading-[1.6]">
                   {BENEFIT_TYPE_DESCRIPTIONS[key] ?? ""}
                 </dd>
               </div>
@@ -84,31 +86,34 @@ export default function HowItWorksPage() {
         </section>
 
         <section>
-          <h2 className="text-[19px] font-semibold text-text-primary">Verification statuses</h2>
-          <p className="mt-3 max-w-[65ch] text-[16px] leading-[1.6] text-text-secondary">
-            A benefit moves through these states over time. Nothing stays &quot;verified&quot; forever by default,
-            confidence decays until someone rechecks it.
+          <h2 className="text-text-primary text-[19px] font-semibold">Verification statuses</h2>
+          <p className="text-text-secondary mt-3 max-w-[65ch] text-[16px] leading-[1.6]">
+            A benefit moves through these states over time. Nothing stays &quot;verified&quot; forever by
+            default, confidence decays until someone rechecks it.
           </p>
           <div className="mt-5 space-y-4">
             {STATUS_ROWS.map((row) => (
-              <div key={row.freshness.text} className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-6">
+              <div
+                key={row.freshness.text}
+                className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-6"
+              >
                 <div className="shrink-0 sm:w-44">
                   <StatusChip freshness={row.freshness} />
                 </div>
-                <p className="text-sm leading-[1.6] text-text-secondary">{row.description}</p>
+                <p className="text-text-secondary text-sm leading-[1.6]">{row.description}</p>
               </div>
             ))}
           </div>
         </section>
 
         <section>
-          <h2 className="text-[19px] font-semibold text-text-primary">Community submissions</h2>
-          <p className="mt-3 max-w-[65ch] text-[16px] leading-[1.6] text-text-secondary">
+          <h2 className="text-text-primary text-[19px] font-semibold">Community submissions</h2>
+          <p className="text-text-secondary mt-3 max-w-[65ch] text-[16px] leading-[1.6]">
             Anyone can submit a benefit they know about. A submission never publishes automatically. It lands
-            in a review queue as &quot;pending,&quot; a maintainer checks the provider&apos;s page directly, and only
-            then does it either become a listing (starting at &quot;needs review&quot; the same as any seeded
-            benefit) or get rejected or sent back for more information. This is the same gate every benefit in
-            the catalog went through, community-sourced or not.
+            in a review queue as &quot;pending,&quot; a maintainer checks the provider&apos;s page directly,
+            and only then does it either become a listing (starting at &quot;needs review&quot; the same as
+            any seeded benefit) or get rejected or sent back for more information. This is the same gate every
+            benefit in the catalog went through, community-sourced or not.
           </p>
         </section>
       </div>

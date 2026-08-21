@@ -8,23 +8,17 @@ import type { BenefitCard } from "@/lib/benefits";
  * /discover results view so the "monitored log" feeling stays identical
  * everywhere benefits are listed.
  */
-export function BenefitIndex({
-  benefits,
-  emptyState,
-}: {
-  benefits: BenefitCard[];
-  emptyState?: ReactNode;
-}) {
+export function BenefitIndex({ benefits, emptyState }: { benefits: BenefitCard[]; emptyState?: ReactNode }) {
   if (benefits.length === 0) {
     return (
-      <div className="rounded-md border border-dashed border-surface-border px-6 py-10 text-center text-text-secondary">
+      <div className="border-surface-border text-text-secondary rounded-md border border-dashed px-6 py-10 text-center">
         {emptyState ?? "No benefits match right now."}
       </div>
     );
   }
 
   return (
-    <div className="border-t border-surface-border">
+    <div className="border-surface-border border-t">
       {benefits.map((benefit) => (
         <BenefitRow key={benefit.id} benefit={benefit} />
       ))}

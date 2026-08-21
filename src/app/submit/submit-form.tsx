@@ -31,7 +31,11 @@ const EMPTY_FORM: FormState = {
   website: "",
 };
 
-type Status = { kind: "idle" } | { kind: "submitting" } | { kind: "success"; id: string } | { kind: "error"; message: string };
+type Status =
+  | { kind: "idle" }
+  | { kind: "submitting" }
+  | { kind: "success"; id: string }
+  | { kind: "error"; message: string };
 
 function toPayload(form: FormState): SubmissionInput {
   return {
@@ -106,7 +110,10 @@ export function SubmitForm({ categorySuggestions }: { categorySuggestions: strin
 
       if (!res.ok) {
         const body = await res.json().catch(() => null);
-        setStatus({ kind: "error", message: (body?.error as string | undefined) ?? "Submission failed. Try again." });
+        setStatus({
+          kind: "error",
+          message: (body?.error as string | undefined) ?? "Submission failed. Try again.",
+        });
         return;
       }
 
@@ -114,29 +121,37 @@ export function SubmitForm({ categorySuggestions }: { categorySuggestions: strin
       setStatus({ kind: "success", id: body.id });
       setForm(EMPTY_FORM);
     } catch {
-      setStatus({ kind: "error", message: "Couldn't reach the server. Check your connection and try again." });
+      setStatus({
+        kind: "error",
+        message: "Couldn't reach the server. Check your connection and try again.",
+      });
     }
   }
 
   if (status.kind === "success") {
     return (
-      <div className="mt-8 rounded-md border border-status-verified/30 bg-status-verified/10 px-6 py-8">
-        <p className="font-mono-data text-xs tracking-[0.03em] text-status-verified uppercase">Submitted</p>
-        <p className="mt-3 text-[17px] leading-[1.6] text-text-primary">
+      <div className="border-status-verified/30 bg-status-verified/10 mt-8 rounded-md border px-6 py-8">
+        <p className="font-mono-data text-status-verified text-xs tracking-[0.03em] uppercase">Submitted</p>
+        <p className="text-text-primary mt-3 text-[17px] leading-[1.6]">
           Thanks, this is now in the review queue.
         </p>
-        <p className="mt-2 max-w-[60ch] text-sm leading-[1.6] text-text-secondary">
+        <p className="text-text-secondary mt-2 max-w-[60ch] text-sm leading-[1.6]">
           It is <span className="text-text-primary">not live yet</span> and won&apos;t appear in the catalog
           until a maintainer checks it against the provider&apos;s page and approves it. See{" "}
           <Link
             href="/how-it-works"
-            className="rounded-sm text-accent hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="text-accent focus-visible:outline-accent rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             how submissions get reviewed
           </Link>
           .
         </p>
-        <Button type="button" variant="secondary" className="mt-5" onClick={() => setStatus({ kind: "idle" })}>
+        <Button
+          type="button"
+          variant="secondary"
+          className="mt-5"
+          onClick={() => setStatus({ kind: "idle" })}
+        >
           Submit another
         </Button>
       </div>
@@ -147,17 +162,29 @@ export function SubmitForm({ categorySuggestions }: { categorySuggestions: strin
   const errorCount = Object.keys(fieldErrors).length;
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-6" aria-describedby={status.kind === "error" ? "submit-error" : undefined}>
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      className="mt-8 space-y-6"
+      aria-describedby={status.kind === "error" ? "submit-error" : undefined}
+    >
       {status.kind === "error" && (
-        <div id="submit-error" role="alert" className="rounded-md border border-status-error/30 bg-status-error/10 px-4 py-3 text-sm text-status-error">
+        <div
+          id="submit-error"
+          role="alert"
+          className="border-status-error/30 bg-status-error/10 text-status-error rounded-md border px-4 py-3 text-sm"
+        >
           {status.message}
         </div>
       )}
 
       {errorCount > 0 && (
-        <div role="alert" className="rounded-md border border-status-error/30 bg-status-error/10 px-4 py-3 text-sm text-status-error">
-          {errorCount === 1 ? "1 field needs" : `${errorCount} fields need`} attention below before this can be
-          submitted.
+        <div
+          role="alert"
+          className="border-status-error/30 bg-status-error/10 text-status-error rounded-md border px-4 py-3 text-sm"
+        >
+          {errorCount === 1 ? "1 field needs" : `${errorCount} fields need`} attention below before this can
+          be submitted.
         </div>
       )}
 
@@ -193,7 +220,10 @@ export function SubmitForm({ categorySuggestions }: { categorySuggestions: strin
       />
 
       <div>
-        <label htmlFor="category" className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">
+        <label
+          htmlFor="category"
+          className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase"
+        >
           Category<span className="text-status-error"> *</span>
         </label>
         <input
@@ -206,7 +236,7 @@ export function SubmitForm({ categorySuggestions }: { categorySuggestions: strin
           placeholder="e.g. Developer Tools"
           aria-invalid={Boolean(fieldErrors.category)}
           aria-describedby={fieldErrors.category ? "category-error" : undefined}
-          className="mt-2 w-full rounded-md border border-control-border bg-surface px-3 py-2.5 text-[15px] text-text-primary outline-none placeholder:text-text-secondary/60 focus:border-accent"
+          className="border-control-border bg-surface text-text-primary placeholder:text-text-secondary/60 focus:border-accent mt-2 w-full rounded-md border px-3 py-2.5 text-[15px] outline-none"
         />
         <datalist id={categoryListId}>
           {categorySuggestions.map((name) => (
@@ -214,7 +244,7 @@ export function SubmitForm({ categorySuggestions }: { categorySuggestions: strin
           ))}
         </datalist>
         {fieldErrors.category && (
-          <p id="category-error" className="mt-1.5 text-xs text-status-error">
+          <p id="category-error" className="text-status-error mt-1.5 text-xs">
             {fieldErrors.category}
           </p>
         )}
@@ -271,7 +301,7 @@ export function SubmitForm({ categorySuggestions }: { categorySuggestions: strin
       />
 
       {/* Honeypot: visually hidden but present and focusable, real visitors never fill it. */}
-      <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
+      <div className="absolute top-auto -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor="website">Leave this field blank</label>
         <input
           id="website"
@@ -313,7 +343,10 @@ function Field({
   const errorId = `${name}-error`;
   return (
     <div>
-      <label htmlFor={name} className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">
+      <label
+        htmlFor={name}
+        className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase"
+      >
         {label}
         {required && <span className="text-status-error"> *</span>}
       </label>
@@ -327,10 +360,10 @@ function Field({
         placeholder={placeholder}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
-        className="mt-2 w-full rounded-md border border-control-border bg-surface px-3 py-2.5 text-[15px] text-text-primary outline-none placeholder:text-text-secondary/60 focus:border-accent"
+        className="border-control-border bg-surface text-text-primary placeholder:text-text-secondary/60 focus:border-accent mt-2 w-full rounded-md border px-3 py-2.5 text-[15px] outline-none"
       />
       {error && (
-        <p id={errorId} className="mt-1.5 text-xs text-status-error">
+        <p id={errorId} className="text-status-error mt-1.5 text-xs">
           {error}
         </p>
       )}
@@ -360,7 +393,10 @@ function TextAreaField({
   const errorId = `${name}-error`;
   return (
     <div>
-      <label htmlFor={name} className="font-mono-data text-xs tracking-[0.03em] text-text-secondary uppercase">
+      <label
+        htmlFor={name}
+        className="font-mono-data text-text-secondary text-xs tracking-[0.03em] uppercase"
+      >
         {label}
         {required && <span className="text-status-error"> *</span>}
       </label>
@@ -374,10 +410,10 @@ function TextAreaField({
         placeholder={placeholder}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
-        className="mt-2 w-full resize-y rounded-md border border-control-border bg-surface px-3 py-2.5 text-[15px] text-text-primary outline-none placeholder:text-text-secondary/60 focus:border-accent"
+        className="border-control-border bg-surface text-text-primary placeholder:text-text-secondary/60 focus:border-accent mt-2 w-full resize-y rounded-md border px-3 py-2.5 text-[15px] outline-none"
       />
       {error && (
-        <p id={errorId} className="mt-1.5 text-xs text-status-error">
+        <p id={errorId} className="text-status-error mt-1.5 text-xs">
           {error}
         </p>
       )}

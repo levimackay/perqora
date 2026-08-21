@@ -21,7 +21,9 @@ export function StatusChip({ freshness, pulse = false }: { freshness: FreshnessL
         TONE_STYLES[freshness.tone],
       )}
     >
-      <span className={cx("h-1.5 w-1.5 rounded-full", TONE_DOT[freshness.tone], pulse && "animate-verify-pulse")} />
+      <span
+        className={cx("h-1.5 w-1.5 rounded-full", TONE_DOT[freshness.tone], pulse && "animate-verify-pulse")}
+      />
       {freshness.text}
     </span>
   );

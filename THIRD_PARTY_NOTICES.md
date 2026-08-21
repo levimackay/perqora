@@ -12,14 +12,14 @@ Perqora is built on open-source software and two licensed typefaces. This file l
 
 The full list of runtime and development dependencies, with their exact versions and licenses, is in `package.json` and `pnpm-lock.yaml`. The major frameworks this project is built on:
 
-| Package | License |
-| --- | --- |
-| Next.js | MIT |
-| React | MIT |
+| Package                              | License    |
+| ------------------------------------ | ---------- |
+| Next.js                              | MIT        |
+| React                                | MIT        |
 | Prisma (client, engines, adapter-pg) | Apache-2.0 |
-| Tailwind CSS | MIT |
-| Zod | MIT |
-| pg (node-postgres) | MIT |
+| Tailwind CSS                         | MIT        |
+| Zod                                  | MIT        |
+| pg (node-postgres)                   | MIT        |
 
 Every dependency in this project is under a permissive license (MIT or Apache-2.0). None require source disclosure or impose copyleft obligations on this repository.
 

@@ -15,11 +15,11 @@ const SAVED: (typeof NAV)[number] = { href: "/saved", label: "Saved" };
 
 export function SiteHeader() {
   return (
-    <header className="relative border-b border-surface-border">
+    <header className="border-surface-border relative border-b">
       <Container className="flex h-16 items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="focus-visible:outline-accent flex items-center gap-2 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           <Image src="/logo.svg" alt="" width={28} height={28} priority />
           <span className="text-[17px] font-semibold tracking-[-0.01em]">Perqora</span>
@@ -30,7 +30,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-sm text-sm text-text-secondary transition-colors duration-150 hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="text-text-secondary hover:text-text-primary focus-visible:outline-accent rounded-sm text-sm transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               {item.label}
             </Link>
@@ -40,7 +40,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-3">
           <Link
             href="/saved"
-            className="hidden rounded-sm text-sm text-text-secondary transition-colors duration-150 hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:inline"
+            className="text-text-secondary hover:text-text-primary focus-visible:outline-accent hidden rounded-sm text-sm transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 sm:inline"
           >
             Saved
           </Link>

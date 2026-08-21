@@ -8,7 +8,9 @@ const SELECT_CLASS =
   "rounded-md border border-control-border bg-surface px-3 py-2 text-sm text-text-primary focus-visible:border-accent focus-visible:outline-none";
 
 export function FilterBarSkeleton() {
-  return <div className="h-[46px] animate-pulse rounded-md border border-surface-border bg-surface-raised/40" />;
+  return (
+    <div className="border-surface-border bg-surface-raised/40 h-[46px] animate-pulse rounded-md border" />
+  );
 }
 
 export function FilterBar({
@@ -62,7 +64,7 @@ export function FilterBar({
         placeholder="Search benefits, providers, tags..."
         value={q}
         onChange={(event) => setQ(event.target.value)}
-        className="flex-1 rounded-md border border-control-border bg-surface px-4 py-2 text-sm text-text-primary placeholder:text-text-secondary focus-visible:border-accent focus-visible:outline-none sm:min-w-64"
+        className="border-control-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-accent flex-1 rounded-md border px-4 py-2 text-sm focus-visible:outline-none sm:min-w-64"
       />
 
       <label htmlFor="benefit-category" className="sr-only">
@@ -109,7 +111,7 @@ export function FilterBar({
         ))}
       </select>
 
-      <label className="font-mono-data flex items-center gap-2 text-sm text-text-secondary">
+      <label className="font-mono-data text-text-secondary flex items-center gap-2 text-sm">
         <input
           type="checkbox"
           checked={freeOnly}
@@ -119,7 +121,7 @@ export function FilterBar({
               else params.delete("freeOnly");
             })
           }
-          className="h-4 w-4 rounded-sm border-control-border accent-accent"
+          className="border-control-border accent-accent h-4 w-4 rounded-sm"
         />
         Free only
       </label>
@@ -131,7 +133,7 @@ export function FilterBar({
             setQ("");
             router.push(pathname, { scroll: false });
           }}
-          className="font-mono-data rounded-sm text-xs text-text-secondary transition-colors duration-150 hover:text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="font-mono-data text-text-secondary hover:text-text-primary focus-visible:outline-accent rounded-sm text-xs transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           Clear filters
         </button>

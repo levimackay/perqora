@@ -6,7 +6,7 @@ export function TypeBadge({ type, className }: { type: BenefitType; className?: 
   return (
     <span
       className={cx(
-        "font-mono-data inline-flex items-center rounded-sm border border-surface-border px-2 py-0.5 text-[11px] tracking-[0.03em] text-text-secondary uppercase",
+        "font-mono-data border-surface-border text-text-secondary inline-flex items-center rounded-sm border px-2 py-0.5 text-[11px] tracking-[0.03em] uppercase",
         className,
       )}
     >

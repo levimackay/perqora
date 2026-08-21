@@ -20,23 +20,23 @@ export function BenefitRow({ benefit }: { benefit: BenefitCard }) {
   return (
     <Link
       href={`/benefits/${benefit.slug}`}
-      className="group grid grid-cols-1 items-center gap-3 rounded-sm border-b border-surface-border py-4 transition-colors duration-150 ease-[var(--ease-standard)] hover:bg-surface-raised/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:grid-cols-[1fr_auto_auto] sm:gap-6 sm:px-3"
+      className="group border-surface-border hover:bg-surface-raised/60 focus-visible:outline-accent grid grid-cols-1 items-center gap-3 rounded-sm border-b py-4 transition-colors duration-150 ease-[var(--ease-standard)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:grid-cols-[1fr_auto_auto] sm:gap-6 sm:px-3"
     >
       <div className="min-w-0">
         <div className="flex items-center gap-2">
-          <h3 className="truncate text-[17px] font-medium text-text-primary group-hover:text-accent">
+          <h3 className="text-text-primary group-hover:text-accent truncate text-[17px] font-medium">
             {benefit.name}
           </h3>
-          <span className="font-mono-data hidden shrink-0 text-xs text-text-secondary sm:inline">
+          <span className="font-mono-data text-text-secondary hidden shrink-0 text-xs sm:inline">
             {benefit.provider}
           </span>
         </div>
-        <p className="mt-1 line-clamp-1 text-sm text-text-secondary">{benefit.category.name}</p>
+        <p className="text-text-secondary mt-1 line-clamp-1 text-sm">{benefit.category.name}</p>
       </div>
 
       <div className="flex items-center gap-3 sm:justify-end">
         <TypeBadge type={benefit.benefitType} />
-        {priceLabel && <span className="font-mono-data text-sm text-text-secondary">{priceLabel}</span>}
+        {priceLabel && <span className="font-mono-data text-text-secondary text-sm">{priceLabel}</span>}
       </div>
 
       <StatusChip freshness={freshness} />

@@ -4,7 +4,7 @@ This file is binding. Deviating from it means editing it first, not quietly dive
 
 ## 1. The brief
 
-**Who, and what do they feel 800ms after load.** CS and technically-minded students first, every other major second. The feeling is *engineered* and *audited*: the calm of opening a well-instrumented dashboard, not the noise of a coupon site.
+**Who, and what do they feel 800ms after load.** CS and technically-minded students first, every other major second. The feeling is _engineered_ and _audited_: the calm of opening a well-instrumented dashboard, not the noise of a coupon site.
 
 **The one thing they remember.** Verification is drawn, not claimed. Every benefit carries a status chip and a "last checked" timestamp rendered like a build-status indicator, and the whole index of benefits reads like a monitored system rather than a wall of deal cards.
 
@@ -15,6 +15,7 @@ This file is binding. Deviating from it means editing it first, not quietly dive
 **Where it lives.** Developer-tool-adjacent consumer SaaS: the register of Linear and Vercel, not the register of a deals aggregator. The flagship benefit is the GitHub Student Developer Pack, so a quiet nod to commit/status UI language is earned, not costume.
 
 **References, and the specific thing taken from each.**
+
 - **Linear**: restrained motion, monospace used for metadata/labels rather than decoration, generous negative space around dense information.
 - **Vercel**: dark-mode-first surface, a grid tight enough to feel engineered, geometric display type doing real hierarchy work.
 - **GitHub's own status/commit UI**: small, literal status language (verified / needs review / stale) instead of marketing badges. Not imitated visually, borrowed structurally.
@@ -24,20 +25,20 @@ This file is binding. Deviating from it means editing it first, not quietly dive
 Two families, both free-licensed, both non-default.
 
 - **Display + body: [Cabinet Grotesk](https://www.fontshare.com/fonts/cabinet-grotesk)** (Fontshare, free for commercial use). A geometric grotesk with real character in its extremes (Black at display sizes, Regular/Medium for text) so one family can carry both without going generic.
-- **Metadata, labels, status, numbers: [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono)** (Google Fonts, OFL). Every timestamp, status chip, price, and eligibility tag is set in Plex Mono. This is the load-bearing decision: mono-for-data is what makes the verification mechanic *read* as verification instead of decoration.
+- **Metadata, labels, status, numbers: [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono)** (Google Fonts, OFL). Every timestamp, status chip, price, and eligibility tag is set in Plex Mono. This is the load-bearing decision: mono-for-data is what makes the verification mechanic _read_ as verification instead of decoration.
 
 Scale, ratio 1.333 (dramatic, matches a stat-led hero):
 
-| Token | Size | Line height | Tracking | Weight |
-|---|---|---|---|---|
-| `--text-display-xl` | 96px / 56px (mobile) | 0.95 | -0.03em | 800 |
-| `--text-display-l` | 64px / 40px | 1.0 | -0.025em | 700 |
-| `--text-display-m` | 40px / 30px | 1.05 | -0.02em | 700 |
-| `--text-heading` | 28px | 1.15 | -0.01em | 600 |
-| `--text-body-l` | 19px | 1.6 | 0 | 400 |
-| `--text-body` | 16px | 1.6 | 0 | 400 |
-| `--text-mono` | 13px | 1.5 | 0.01em | 500 |
-| `--text-mono-sm` | 11px | 1.4 | 0.03em | 500, uppercase |
+| Token               | Size                 | Line height | Tracking | Weight         |
+| ------------------- | -------------------- | ----------- | -------- | -------------- |
+| `--text-display-xl` | 96px / 56px (mobile) | 0.95        | -0.03em  | 800            |
+| `--text-display-l`  | 64px / 40px          | 1.0         | -0.025em | 700            |
+| `--text-display-m`  | 40px / 30px          | 1.05        | -0.02em  | 700            |
+| `--text-heading`    | 28px                 | 1.15        | -0.01em  | 600            |
+| `--text-body-l`     | 19px                 | 1.6         | 0        | 400            |
+| `--text-body`       | 16px                 | 1.6         | 0        | 400            |
+| `--text-mono`       | 13px                 | 1.5         | 0.01em   | 500            |
+| `--text-mono-sm`    | 11px                 | 1.4         | 0.03em   | 500, uppercase |
 
 Body measure caps at 65ch. Display type never sits under 96px without dropping a full step, not a fluid interpolation, so the jump stays dramatic at every breakpoint.
 

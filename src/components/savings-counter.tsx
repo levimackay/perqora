@@ -23,7 +23,11 @@ function getReducedMotionServerSnapshot() {
 
 /** Reads prefers-reduced-motion without an effect->setState round trip. */
 function usePrefersReducedMotion() {
-  return useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, getReducedMotionServerSnapshot);
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
 }
 
 /**
@@ -77,8 +81,8 @@ export function SavingsCounter({
   if (summary.totalBenefits === 0) {
     return (
       <div>
-        <p className="font-mono-data text-[11px] tracking-[0.03em] text-text-secondary uppercase">{label}</p>
-        <p className="mt-2 text-[30px] leading-[1.05] font-bold tracking-[-0.02em] text-text-secondary">
+        <p className="font-mono-data text-text-secondary text-[11px] tracking-[0.03em] uppercase">{label}</p>
+        <p className="text-text-secondary mt-2 text-[30px] leading-[1.05] font-bold tracking-[-0.02em]">
           No benefits matched yet
         </p>
       </div>
@@ -87,12 +91,12 @@ export function SavingsCounter({
 
   return (
     <div>
-      <p className="font-mono-data text-[11px] tracking-[0.03em] text-text-secondary uppercase">{label}</p>
-      <p className="font-mono-data mt-2 text-[56px] leading-[0.95] font-extrabold tracking-[-0.03em] text-text-primary sm:text-[96px]">
+      <p className="font-mono-data text-text-secondary text-[11px] tracking-[0.03em] uppercase">{label}</p>
+      <p className="font-mono-data text-text-primary mt-2 text-[56px] leading-[0.95] font-extrabold tracking-[-0.03em] sm:text-[96px]">
         {formatCents(value, summary.currency)}
       </p>
       {unpriced > 0 && (
-        <p className="mt-3 max-w-[65ch] text-sm text-text-secondary">
+        <p className="text-text-secondary mt-3 max-w-[65ch] text-sm">
           {summary.benefitsWithValue} of {summary.totalBenefits} benefit
           {summary.totalBenefits === 1 ? "" : "s"} priced above. {unpriced} more unlock value that varies by
           usage (cloud credits, bundles, conditional pricing) and are not counted in this number.
